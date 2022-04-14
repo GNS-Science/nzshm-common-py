@@ -1,10 +1,11 @@
 # nzshm-common
+
 A pure python library of shared objects used in nzshm projects
 
 ## Installation
 
 ```
-pip install .....
+pip install git+https://github.com/GNS-Science/nzshm-common-py>=1.0.0b
 ```
 
 ## Use
