@@ -21,7 +21,7 @@ URL = 'https://github.com/GNS-Science/nzshm-common-py'
 EMAIL = 'chrisbc@artisan.co.nz'
 AUTHOR = 'GNS NSHM programme'
 REQUIRES_PYTHON = '>=3.8.0'
-VERSION = '1.0.1'
+VERSION = '1.0.2'
 
 # What packages are required for this module to be executed?
 REQUIRED = []
