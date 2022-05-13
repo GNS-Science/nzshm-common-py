@@ -1,9 +1,3 @@
-LOCATION_LISTS = [
-    {'id':'NZ', 'name': "Default NZ locations", 'locations': ['WLG', 'GIS', 'CHC', 'IVC', 'DUD', 'NPE', 'NPL', 'PMR', 'NSN',
-                                                              'BHE', 'WHK', 'GMN', 'ZQN', 'AKL', 'ROT',
-                                                              'TUO', 'WRE', 'LVN', 'TMZ', 'TIU', 'OAM', 'PUK', 'HLZ', 'LYJ', 'KBZ']},
-    {'id':'NZ2', 'name': "Main Cities NZ", 'locations': ['WLG', 'CHC', 'DUD', 'NPL', 'AKL', 'ROT', 'HLZ']}]
-
 
 
 # Omitting country for now, focus on NZ
@@ -30,7 +24,7 @@ LOCATIONS = [
     { "id": "TEU", "name": "Te Anau", "latitude": -45.41, "longitude": 167.72 },
     { "id": "TIU", "name": "Timaru", "latitude": -44.4, "longitude": 171.26 },
     { "id": "TKZ", "name": "Tokoroa", "latitude": -38.23, "longitude": 175.87 },
-    { "id": "TMZ", "name": "Tauranga", "latitude": -37.69, "longitude": 176.17 },
+    { "id": "TRG", "name": "Tauranga", "latitude": -37.69, "longitude": 176.17 },
     { "id": "TMZ", "name": "Thames", "latitude": -37.13, "longitude": 175.53 },
     { "id": "TUO", "name": "Taupo", "latitude": -38.68, "longitude": 176.08 },
     { "id": "WHK", "name": "Whakatane", "latitude": -37.98, "longitude": 177.0 },
@@ -44,6 +38,13 @@ LOCATIONS = [
     { "id": "xx5", "name": "Hanmer Springs", "latitude": -42.54, "longitude": 172.78 },
     { "id": "ZQN", "name": "Queenstown", "latitude": -45.02, "longitude": 168.69 }
 ]
+
+
+LOCATION_LISTS = [
+    {'id':'NZ', 'name': "Default NZ locations", 'locations': list(map(lambda loc: loc['id'], LOCATIONS)) },
+    {'id':'NZ2', 'name': "Main Cities NZ", 'locations': ['WLG', 'CHC', 'DUD', 'NPL', 'AKL', 'ROT', 'HLZ']}
+]
+
 
 def location_by_id(location_code):
 	for itm in LOCATIONS:
