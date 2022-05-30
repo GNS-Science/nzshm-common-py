@@ -5,6 +5,7 @@
 LOCATIONS = [
     { "id": "AKL", "name": "Auckland", "latitude": -36.87, "longitude": 174.77 },
     { "id": "BHE", "name": "Blenheim", "latitude": -41.51, "longitude": 173.95 },
+    { "id": "ROT", "name": "Rotorua", "latitude": -38.14, "longitude": 176.25 },
     { "id": "CHC", "name": "Christchurch", "latitude": -43.53, "longitude": 172.63 },
     { "id": "DUD", "name": "Dunedin", "latitude": -45.87, "longitude": 170.5 },
     { "id": "GIS", "name": "Gisborne", "latitude": -38.65, "longitude": 178.0 },
@@ -24,8 +25,8 @@ LOCATIONS = [
     { "id": "TEU", "name": "Te Anau", "latitude": -45.41, "longitude": 167.72 },
     { "id": "TIU", "name": "Timaru", "latitude": -44.4, "longitude": 171.26 },
     { "id": "TKZ", "name": "Tokoroa", "latitude": -38.23, "longitude": 175.87 },
-    { "id": "TRG", "name": "Tauranga", "latitude": -37.69, "longitude": 176.17 },
     { "id": "TMZ", "name": "Thames", "latitude": -37.13, "longitude": 175.53 },
+    { "id": "TRG", "name": "Tauranga", "latitude": -37.69, "longitude": 176.17 },
     { "id": "TUO", "name": "Taupo", "latitude": -38.68, "longitude": 176.08 },
     { "id": "WHK", "name": "Whakatane", "latitude": -37.98, "longitude": 177.0 },
     { "id": "WHO", "name": "Franz Josef", "latitude": -43.35, "longitude": 170.17 },
