@@ -34,14 +34,22 @@ LOCATIONS = [
     {"id": "xx3", "name": "Otira", "latitude": -42.78, "longitude": 171.54},
     {"id": "xx4", "name": "Haast", "latitude": -43.88, "longitude": 169.06},
     {"id": "xx5", "name": "Hanmer Springs", "latitude": -42.54, "longitude": 172.78},
-    {"id": "ZQN", "name": "Queenstown", "latitude": -45.02, "longitude": 168.69}
+    {"id": "ZQN", "name": "Queenstown", "latitude": -45.02, "longitude": 168.69},
 ]
 
-LOCATIONS_BY_ID = {location['id']: location for location in LOCATIONS}
+LOCATIONS_BY_ID = {location["id"]: location for location in LOCATIONS}
 
 LOCATION_LISTS = [
-    {'id': 'NZ', 'name': "Default NZ locations", 'locations': list(map(lambda loc: loc['id'], LOCATIONS))},
-    {'id': 'NZ2', 'name': "Main Cities NZ", 'locations': ['WLG', 'CHC', 'DUD', 'NPL', 'AKL', 'ROT', 'HLZ']}
+    {
+        "id": "NZ",
+        "name": "Default NZ locations",
+        "locations": list(map(lambda loc: loc["id"], LOCATIONS)),
+    },
+    {
+        "id": "NZ2",
+        "name": "Main Cities NZ",
+        "locations": ["WLG", "CHC", "DUD", "NPL", "AKL", "ROT", "HLZ"],
+    },
 ]
 
 
@@ -51,6 +59,6 @@ def location_by_id(location_code):
 
 if __name__ == "__main__":
     """Print all locations."""
-    print('custom_site_id,lon,lat')
+    print("custom_site_id,lon,lat")
     for loc in LOCATIONS:
         print(f"{loc['id']},{loc['longitude']},{loc['latitude']}")
