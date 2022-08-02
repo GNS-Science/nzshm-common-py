@@ -1,9 +1,9 @@
 from collections import namedtuple
 from enum import Enum
 
-from nzshm_common.grids.nz_0_2_nb_1_1 import NZ_0_2_nb_1_1
-from nzshm_common.grids.nz_0_1_nb_1_v1 import NZ01nb1v1
 from nzshm_common.grids.nz_0_1_nb_1_v0 import NZ01nb1v0
+from nzshm_common.grids.nz_0_1_nb_1_v1 import NZ01nb1v1
+from nzshm_common.grids.nz_0_2_nb_1_1 import NZ_0_2_nb_1_1
 from nzshm_common.grids.wlg_0_01_nb_1_1 import WLG_0_01_nb_1_1
 from nzshm_common.grids.wlg_0_05_nb_1_1 import WLG_0_05_nb_1_1
 
