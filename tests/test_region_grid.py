@@ -1,5 +1,4 @@
-from nzshm_common.grids.region_grid import load_grid
-
+from nzshm_common.grids import load_grid
 
 def test_load_wlg_0_005():
     assert len(load_grid('WLG_0_05_nb_1_1')) == 62
