@@ -2,11 +2,13 @@ import pytest
 
 from nzshm_common.location import CodedLocation
 
+
 def test_coded_location_is_hashable():
     c = CodedLocation(-45.2, 175.2, 0.1)
     s = set()
     s.add(c)
     assert c in s
+
 
 oh_point_five_expected = [
     (-45.27, 171.1, '-45.5~171.0'),
@@ -16,22 +18,26 @@ oh_point_five_expected = [
     (-41.3, 174.783, '-41.5~175.0'),  # WLG
 ]
 
+
 @pytest.mark.parametrize("lat,lon,expected", oh_point_five_expected)
 def test_coded_location_equality(lat, lon, expected):
     c0 = CodedLocation(lat, lon, 0.5)
     c1 = CodedLocation(lat, lon, 0.5)
     assert c0 == c1
 
+
 @pytest.mark.parametrize("lat,lon,expected", oh_point_five_expected)
 def test_downsample_default_oh_point_five_no_downsampking_required(lat, lon, expected):
     print(f"lat {lat} lon {lon} -> {expected}")
     assert CodedLocation(lat, lon, 0.5).code == expected
+
 
 @pytest.mark.parametrize("lat,lon,expected", oh_point_five_expected)
 def test_downsample_default_oh_point_five(lat, lon, expected):
     print(f"lat {lat} lon {lon} -> {expected}")
     c = CodedLocation(lat, lon, 0.5)
     assert c.downsample(0.5).code == expected
+
 
 @pytest.mark.parametrize(
     "lat,lon,expected",

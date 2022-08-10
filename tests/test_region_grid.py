@@ -1,5 +1,6 @@
 from nzshm_common.grids import load_grid
 
+
 def test_load_wlg_0_005():
     assert len(load_grid('WLG_0_05_nb_1_1')) == 62
 
@@ -17,7 +18,6 @@ def test_load_lat_lon_order_spacing():
     grid = load_grid('NZ_0_1_NB_1_0')
     assert grid[0] == (-46.1, 166.4)
     assert grid[1] == (-46.0, 166.4)
-
 
     grid = load_grid('NZ_0_1_NB_1_1')
     assert grid[0] == (-46.1, 166.4)
