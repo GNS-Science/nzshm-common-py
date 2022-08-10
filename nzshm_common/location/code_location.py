@@ -26,9 +26,7 @@ class CodedLocation:
         self.lat = round(lat * div_res, places) / div_res
         self.resolution = resolution
 
-        self._code = (
-            f"{self.lat:.{self.display_places}f}~{self.lon:.{self.display_places}f}"
-        )
+        self._code = f"{self.lat:.{self.display_places}f}~{self.lon:.{self.display_places}f}"
 
     @property
     def code(self) -> str:
