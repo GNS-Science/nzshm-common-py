@@ -1,6 +1,12 @@
 import pytest
+import unittest
 
 from nzshm_common.location import CodedLocation
+from nzshm_common.grids.region_grid import load_grid
+import random
+
+GRID_02 = load_grid('NZ_0_2_NB_1_1')
+LOCS = [CodedLocation(*loc, 0.001) for loc in GRID_02[20:50]]
 
 
 def test_coded_location_is_hashable():
@@ -8,6 +14,28 @@ def test_coded_location_is_hashable():
     s = set()
     s.add(c)
     assert c in s
+
+
+class CodedLocationResampling(unittest.TestCase):
+    def test_get_nearest_hazard_for_an_arbitrary_location(self):
+        gridloc = random.choice(LOCS)
+        print(f'gridloc {gridloc}')
+
+        off_lat = round(gridloc.lat + random.randint(0, 9) * 0.01, 3)
+        off_lon = round(gridloc.lon + random.randint(0, 9) * 0.01, 3)
+        somewhere_off_grid = CodedLocation(off_lat, off_lon, 0.001)
+
+        nearest_grid = somewhere_off_grid.downsample(0.2)
+
+        print(f'somewhere_off_grid {somewhere_off_grid}')
+        print(f'nearest_grid {nearest_grid}')
+
+        self.assertEqual(gridloc, nearest_grid.resample(0.001))
+        self.assertEqual(gridloc, nearest_grid.downsample(0.001))
+        self.assertEqual(gridloc.code, nearest_grid.downsample(0.001).code)
+
+        self.assertEqual(gridloc, CodedLocation(nearest_grid.lat, nearest_grid.lon, 0.001))
+        self.assertTrue(CodedLocation(nearest_grid.lat, nearest_grid.lon, 0.001) in LOCS)
 
 
 oh_point_five_expected = [
