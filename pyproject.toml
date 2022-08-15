@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nzshm_common"
-version = "0.2.0"
+version = "0.3.0"
 description = "A small pure python library for shared NZ NSHM data like locations."
 authors = ["Chris Chamberlain <chrisbc@artisan.co.nz>"]
 license = "GNU Affero V3"
