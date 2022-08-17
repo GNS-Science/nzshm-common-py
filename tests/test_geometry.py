@@ -22,7 +22,6 @@ except ImportError:
 
 
 class TestSquareTile(unittest.TestCase):
-
     @unittest.skipUnless(HAVE_SHAPELY, "Test requires optional shapely module.")
     def test_adjacent_tiles_pt1(self):
         """Get some 0.1 degree locations, check we can build tiles."""
@@ -81,6 +80,7 @@ class TestHex(unittest.TestCase):
         self.assertAlmostEqual(175, hex.centroid.bounds[1])  # longiutude
 
     unittest.skipUnless(HAVE_SHAPELY, "Test requires optional shapely module.")
+
     def test_adjacent_hexagons_pt2(self):
         """Get some 0.2 degree locations, check we can buld adjacent hexagons."""
 
@@ -104,6 +104,7 @@ class TestHex(unittest.TestCase):
         self.assertEqual(cells[0].distance(cells[1]), 0.0)
 
     unittest.skipUnless(HAVE_SHAPELY, "Test requires optional shapely module.")
+
     def test_adjacent_hexagons_pt1(self):
         """Get some 0.1 degree locations, check we can buld adjacent hexagons."""
 

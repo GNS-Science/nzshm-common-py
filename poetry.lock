@@ -571,7 +571,7 @@ test = []
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<4.0.0"
-content-hash = "25c961593b24543fc34d7cefc0b972d84464a86f269a2129497f2cefd4279225"
+content-hash = "c7e6256084cc80efb78206069e489a972f6a1c7e8679cff7b8e8fa11dedcb920"
 
 [metadata.files]
 atomicwrites = [
