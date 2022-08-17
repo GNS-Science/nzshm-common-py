@@ -69,8 +69,10 @@ def create_hexgrid(bbox, side):
 
 
 class TestHex(unittest.TestCase):
-    def test_create_hexagon(self):
 
+    unittest.skipUnless(HAVE_SHAPELY, "Test requires optional shapely module.")
+
+    def test_create_hexagon(self):
         RESOLUTION = 1  # degrees
         edge = math.sqrt(RESOLUTION**2 / (3 / 2 * math.sqrt(3)))
 
