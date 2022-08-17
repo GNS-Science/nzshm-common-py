@@ -476,7 +476,7 @@ name = "shapely"
 version = "1.8.3"
 description = "Geometric objects, predicates, and operations"
 category = "main"
-optional = true
+optional = false
 python-versions = ">=3.6"
 
 [package.extras]
@@ -571,7 +571,7 @@ test = []
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<4.0.0"
-content-hash = "212c220bd9271d32336a1bc6c2f446aa39fca737811adc1a821db2e1cee8330d"
+content-hash = "25c961593b24543fc34d7cefc0b972d84464a86f269a2129497f2cefd4279225"
 
 [metadata.files]
 atomicwrites = [

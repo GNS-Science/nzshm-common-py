@@ -44,6 +44,9 @@ test = [
 
 dev = ["tox", "pre-commit", "virtualenv", "pip", "twine", "toml", "bump2version"]
 
+[tool.poetry.group.dev.dependencies]
+Shapely = "^1.8.3"
+
 [tool.black]
 line-length = 120
 skip-string-normalization = true

@@ -22,6 +22,7 @@ except ImportError:
 
 
 class TestSquareTile(unittest.TestCase):
+
     @unittest.skipUnless(HAVE_SHAPELY, "Test requires optional shapely module.")
     def test_adjacent_tiles_pt1(self):
         """Get some 0.1 degree locations, check we can build tiles."""
@@ -57,7 +58,7 @@ class TestSquareTile(unittest.TestCase):
         self.assertEqual(gdf.shape[0], len(grid_pts))
 
 
-# TODO: need a differnt grid layout...
+# TODO: need a different grid layout...
 def create_hexgrid(bbox, side):
     """
     returns an array of Points describing hexagons centers that are inside the given bounding_box
@@ -79,6 +80,7 @@ class TestHex(unittest.TestCase):
         self.assertAlmostEqual(-45, hex.centroid.bounds[0])  # latitude
         self.assertAlmostEqual(175, hex.centroid.bounds[1])  # longiutude
 
+    unittest.skipUnless(HAVE_SHAPELY, "Test requires optional shapely module.")
     def test_adjacent_hexagons_pt2(self):
         """Get some 0.2 degree locations, check we can buld adjacent hexagons."""
 
@@ -101,6 +103,7 @@ class TestHex(unittest.TestCase):
 
         self.assertEqual(cells[0].distance(cells[1]), 0.0)
 
+    unittest.skipUnless(HAVE_SHAPELY, "Test requires optional shapely module.")
     def test_adjacent_hexagons_pt1(self):
         """Get some 0.1 degree locations, check we can buld adjacent hexagons."""
 
