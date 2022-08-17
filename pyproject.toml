@@ -1,10 +1,20 @@
 [tool.poetry]
-name = "nzshm_common"
+name = "nzshm-common"
 version = "0.3.1"
+homepage = "https://github.com/GNS-Science/nzshm-common-py"
 description = "A small pure python library for shared NZ NSHM data like locations."
-authors = ["Chris Chamberlain <chrisbc@artisan.co.nz>"]
+authors = ["GNS Science <chrisbc@artisan.co.nz>"]
+readme = "README.md"
 license = "GNU Affero V3"
-
+classifiers=[
+    'Development Status :: 2 - Pre-Alpha',
+    'Intended Audience :: Developers',
+    'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+    'Natural Language :: English',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+]
 packages = [
 	{ include = "nzshm_common" },
 	{ include = "tests", format = "sdist" }

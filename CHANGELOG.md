@@ -6,16 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [0.3.1] - 2022-08-18
-
-### Added
- - github actions config
-
-## [0.3.0] - 2022-08-15
+## [0.3.2] - 2022-08-18
 
 ### Added
  - extras [geometry] to provide geometry helper
+
+### Changed
+ - github actions config
  - tox setup
+ - project metadata
 
 ### Removed
   - python 3.7 support (pandas)
