@@ -562,13 +562,13 @@ testing = ["coverage (>=6.2)", "coverage-enable-subprocess (>=1)", "flaky (>=3.7
 
 [extras]
 dev = []
-geometry = ["geopandas"]
+geometry = ["geopandas", "Shapely"]
 test = []
 
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<4.0.0"
-content-hash = "e06bbcd5457bf3fa5804e1d10ecbe6b4e6a4e5049f9691e9dd461b7106653ba2"
+content-hash = "d70975fc93fc0484743b9ddac443c5b5e3bf9a5b982f8d68c668e83d35551f40"
 
 [metadata.files]
 attrs = [

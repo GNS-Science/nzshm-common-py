@@ -27,7 +27,7 @@ Shapely = {version = "^1.8.3", optional = true, extras = ["geometry"]}
 
 [tool.poetry.extras]
 
-geometry = ["geopandas"]
+geometry = ["geopandas", "Shapely"]
 
 test = [
     "pytest",
