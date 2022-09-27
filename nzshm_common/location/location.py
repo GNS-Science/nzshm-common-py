@@ -30,11 +30,12 @@ LOCATIONS = [
     {"id": "WHO", "name": "Franz Josef", "latitude": -43.35, "longitude": 170.17},
     {"id": "WLG", "name": "Wellington", "latitude": -41.3, "longitude": 174.78},
     {"id": "WSZ", "name": "Westport", "latitude": -41.75, "longitude": 171.58},
-    {"id": "xx1", "name": "Whanganui", "latitude": -39.93, "longitude": 175.05},
-    {"id": "xx2", "name": "Turangi", "latitude": -39.0, "longitude": 175.93},
-    {"id": "xx3", "name": "Otira", "latitude": -42.78, "longitude": 171.54},
-    {"id": "xx4", "name": "Haast", "latitude": -43.88, "longitude": 169.06},
-    {"id": "xx5", "name": "Hanmer Springs", "latitude": -42.54, "longitude": 172.78},
+    {"id": "ZWG", "name": "Whanganui", "latitude": -39.93, "longitude": 175.05},
+    {"id": "WRE", "name": "Whangarei", "latitude": -35.72, "longitude": 174.32},
+    {"id": "ZTR", "name": "Turangi", "latitude": -39.0, "longitude": 175.93},
+    {"id": "ZOT", "name": "Otira", "latitude": -42.78, "longitude": 171.54},
+    {"id": "ZHT", "name": "Haast", "latitude": -43.88, "longitude": 169.06},
+    {"id": "ZHS", "name": "Hanmer Springs", "latitude": -42.54, "longitude": 172.78},
     {"id": "ZQN", "name": "Queenstown", "latitude": -45.02, "longitude": 168.69},
 ]
 
