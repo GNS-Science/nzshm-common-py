@@ -44,7 +44,7 @@ LOCATIONS = [
 ]
 
 def get_srwg214():
-    srwg214_csv_filepath = Path(Path(__file__).parents[2], 'data', 'UrbanRuralLists.csv')
+    srwg214_csv_filepath = Path(Path(__file__).parent, 'UrbanRuralLists.csv')
     with open(srwg214_csv_filepath, 'r') as csvfile:
         reader = csv.reader(csvfile)
         header = next(reader)
