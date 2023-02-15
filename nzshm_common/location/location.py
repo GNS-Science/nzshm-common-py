@@ -52,7 +52,7 @@ def get_srwg214():
             lat = float(row[-1])
             lon = float(row[-2])
             name = row[8]
-            id = f'srwg_x{i}'
+            id = f'srg_{i}'
             yield dict(
                 id = id,
                 name = name,
