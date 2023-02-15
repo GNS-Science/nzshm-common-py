@@ -1,3 +1,7 @@
+import csv
+
+from pathlib import Path
+
 # Omitting country for now, focus on NZ
 # https://service.unece.org/trade/locode/nz.htm
 LOCATIONS = [
@@ -38,6 +42,26 @@ LOCATIONS = [
     {"id": "ZHS", "name": "Hanmer Springs", "latitude": -42.54, "longitude": 172.78},
     {"id": "ZQN", "name": "Queenstown", "latitude": -45.02, "longitude": 168.69},
 ]
+
+def get_srwg214():
+    srwg214_csv_filepath = Path(Path(__file__).parents[2], 'data', 'UrbanRuralLists.csv')
+    with open(srwg214_csv_filepath, 'r') as csvfile:
+        reader = csv.reader(csvfile)
+        header = next(reader)
+        for i, row in enumerate(reader):
+            lat = float(row[-1])
+            lon = float(row[-2])
+            name = row[8]
+            id = f'srwg_x{i}'
+            yield dict(
+                id = id,
+                name = name,
+                latitude = lat,
+                longitude = lon,
+            )
+
+
+LOCATIONS_SRWG214_BY_ID = {location["id"]: location for location in get_srwg214()}
 
 LOCATIONS_BY_ID = {location["id"]: location for location in LOCATIONS}
 
