@@ -60,6 +60,7 @@ def get_srwg214():
                 longitude = lon,
             )
 
+LOCATIONS_SRWG214 = list(get_srwg214())
 
 LOCATIONS_SRWG214_BY_ID = {location["id"]: location for location in get_srwg214()}
 
@@ -76,11 +77,18 @@ LOCATION_LISTS = [
         "name": "Main Cities NZ",
         "locations": ["WLG", "CHC", "DUD", "NPL", "AKL", "ROT", "HLZ"],
     },
+    {
+        "id": "SRWG214",
+        "name": "Seismic Risk Working Group NZ code locations",
+        "locations": list(map(lambda loc: loc["id"], LOCATIONS_SRWG214)),
+    },
 ]
 
 
 def location_by_id(location_code):
-    return LOCATIONS_BY_ID[location_code]
+    if LOCATIONS_BY_ID.get(location_code):
+        return LOCATIONS_BY_ID[location_code]
+    return LOCATIONS_SRWG214_BY_ID[location_code] 
 
 
 if __name__ == "__main__":
