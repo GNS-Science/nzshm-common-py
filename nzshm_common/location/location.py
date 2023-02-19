@@ -1,5 +1,4 @@
-import csv
-
+import json
 from pathlib import Path
 
 # Omitting country for now, focus on NZ
@@ -44,23 +43,11 @@ LOCATIONS = [
 ]
 
 def get_srwg214():
-    srwg214_csv_filepath = Path(Path(__file__).parent, 'UrbanRuralLists.csv')
-    with open(srwg214_csv_filepath, 'r') as csvfile:
-        reader = csv.reader(csvfile)
-        header = next(reader)
-        for i, row in enumerate(reader):
-            lat = float(row[-1])
-            lon = float(row[-2])
-            name = row[8]
-            id = f'srg_{i}'
-            yield dict(
-                id = id,
-                name = name,
-                latitude = lat,
-                longitude = lon,
-            )
+    srwg214_json_filepath = Path(Path(__file__).parent, 'locations_srwg214.json')
+    with open(srwg214_json_filepath, 'r') as jsonfile:
+        return json.load(jsonfile)
 
-LOCATIONS_SRWG214 = list(get_srwg214())
+LOCATIONS_SRWG214 = get_srwg214()
 
 LOCATIONS_SRWG214_BY_ID = {location["id"]: location for location in get_srwg214()}
 
