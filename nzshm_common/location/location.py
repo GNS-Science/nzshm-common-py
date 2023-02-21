@@ -40,7 +40,7 @@ LOCATION_LISTS = {
 
 
 def location_by_id(location_code):
-    return LOCATIONS_BY_ID[location_code]
+    return LOCATIONS_BY_ID.get(location_code)
 
 
 if __name__ == "__main__":
