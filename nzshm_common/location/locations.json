@@ -1070,7 +1070,7 @@
     {
         "id": "srg_142",
         "name": "Blenheim",
-        "latitude": -41.520502523,
+        "latitude": -41.520,
         "longitude": 173.948198286
     },
     {
@@ -1335,7 +1335,7 @@
         "id": "srg_186",
         "name": "Timaru",
         "latitude": -44.378587341,
-        "longitude": 171.230503614
+        "longitude": 171.230
     },
     {
         "id": "srg_187",
