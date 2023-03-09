@@ -22,12 +22,11 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.8,<4.0.0"
-geopandas = {version = "^0.11.1", optional = true, extras = ["geometry"]}
-Shapely = {version = "^1.8.3", optional = true, extras = ["geometry"]}
+geopandas = {version = "^0.12.2", optional = true}
 
 [tool.poetry.extras]
 
-geometry = ["geopandas", "Shapely"]
+geometry = ["geopandas"]
 
 test = [
     "pytest",
