@@ -8,15 +8,25 @@ locations_filepath = Path(Path(__file__).parent, 'locations.json')
 with open(locations_filepath, 'r') as locations_file:
     LOCATIONS = json.load(locations_file)
 
+nz_ids_filepath = Path(Path(__file__).parent, 'nz_ids.json')
+with open(nz_ids_filepath, 'r') as nz_ids_file:
+    NZ_IDS = json.load(nz_ids_file)
+
 LOCATIONS_BY_ID = {location["id"]: location for location in LOCATIONS}
 
 
 LOCATION_LISTS = {
 
+    "HB":{
+        "id": "HB",
+        "name": "Hawk's Bay high res grid with vs30",
+        "locations": [loc["id"] for loc in LOCATIONS if "hb_" in loc["id"]]
+    },
+
     "NZ":{
         "id": "NZ",
         "name": "Default NZ locations",
-        "locations": [loc["id"] for loc in LOCATIONS if "srg" not in loc["id"]]
+        "locations": NZ_IDS
     },
 
     "NZ2":{
@@ -28,7 +38,8 @@ LOCATION_LISTS = {
     "SRWG214":{
         "id": "SRWG214",
         "name": "Seismic Risk Working Group NZ code locations",
-        "locations": list(map(lambda idn: f"srg_{idn}", range(214))),
+        # "locations": list(map(lambda idn: f"srg_{idn}", range(214))),
+        "locations": [loc["id"] for loc in LOCATIONS if "srg_" in loc["id"]]
     },
     
     "ALL":{
