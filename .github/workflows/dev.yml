@@ -18,6 +18,9 @@ jobs:
   # This workflow contains a single job called "test"
   test:
     # The type of runner that the job will run on
+    defaults:
+      run:
+        shell: bash
     strategy:
       matrix:
         python-versions: [3.9, '3.10', 3.11]
@@ -59,7 +62,8 @@ jobs:
           poetry add tox-gh-actions
 
       - name: test with tox (uses tox-gh-actions to select correct environment)
-        run:
+        run: |
+          source $VENV
           poetry run tox
 
       - name: list files
