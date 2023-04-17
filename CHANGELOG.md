@@ -10,7 +10,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - update optional geopandas version
  - location_by_id() retuns None if code doesn't exist
  - LOCATIONS and LOCATION_LISTS
- - dropped support for python 3.8
  - included support for python 3.10
 
 ### Added
