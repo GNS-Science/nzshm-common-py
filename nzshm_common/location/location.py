@@ -16,33 +16,24 @@ LOCATIONS_BY_ID = {location["id"]: location for location in LOCATIONS}
 
 
 LOCATION_LISTS = {
-
-    "HB":{
+    "HB": {
         "id": "HB",
         "name": "Hawk's Bay high res grid with vs30",
-        "locations": [loc["id"] for loc in LOCATIONS if "hb_" in loc["id"]]
+        "locations": [loc["id"] for loc in LOCATIONS if "hb_" in loc["id"]],
     },
-
-    "NZ":{
-        "id": "NZ",
-        "name": "Default NZ locations",
-        "locations": NZ_IDS
-    },
-
-    "NZ2":{
+    "NZ": {"id": "NZ", "name": "Default NZ locations", "locations": NZ_IDS},
+    "NZ2": {
         "id": "NZ2",
         "name": "Main Cities NZ",
         "locations": ["WLG", "CHC", "DUD", "NPL", "AKL", "ROT", "HLZ"],
     },
-
-    "SRWG214":{
+    "SRWG214": {
         "id": "SRWG214",
         "name": "Seismic Risk Working Group NZ code locations",
         # "locations": list(map(lambda idn: f"srg_{idn}", range(214))),
-        "locations": [loc["id"] for loc in LOCATIONS if "srg_" in loc["id"]]
+        "locations": [loc["id"] for loc in LOCATIONS if "srg_" in loc["id"]],
     },
-    
-    "ALL":{
+    "ALL": {
         "id": "ALL",
         "name": "Seismic Risk Working Group NZ code locations",
         "locations": list(map(lambda loc: loc["id"], LOCATIONS)),

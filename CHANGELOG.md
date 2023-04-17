@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2023-04-17
+### Changed
+ - update optional geopandas version
+ - location_by_id() retuns None if code doesn't exist
+ - LOCATIONS and LOCATION_LISTS
+ - dropped support for python 3.8
+ - included support for python 3.10
+
+### Added
+ - add Hawkes Bay locatons with vs30s
+ - add SRWG214 locations
+ - function to create backarc polygon
+ - backarc polygon
+ - add BACKARC_POLYGON constant (note requires optional geopandas dependency)
+
 ## [0.4.0] - 2022-09-27
 ### Changed
  - updated temporary codes (xxN) used for some locations to use Z prefix
