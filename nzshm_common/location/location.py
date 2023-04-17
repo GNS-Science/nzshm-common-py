@@ -1,62 +1,48 @@
+import json
+from pathlib import Path
+
 # Omitting country for now, focus on NZ
 # https://service.unece.org/trade/locode/nz.htm
-LOCATIONS = [
-    {"id": "AKL", "name": "Auckland", "latitude": -36.87, "longitude": 174.77},
-    {"id": "BHE", "name": "Blenheim", "latitude": -41.51, "longitude": 173.95},
-    {"id": "CHC", "name": "Christchurch", "latitude": -43.53, "longitude": 172.63},
-    {"id": "DUD", "name": "Dunedin", "latitude": -45.87, "longitude": 170.5},
-    {"id": "GIS", "name": "Gisborne", "latitude": -38.65, "longitude": 178.0},
-    {"id": "GMN", "name": "Greymouth", "latitude": -42.45, "longitude": 171.21},
-    {"id": "HAW", "name": "Hawera", "latitude": -39.59, "longitude": 174.28},
-    {"id": "HLZ", "name": "Hamilton", "latitude": -37.78, "longitude": 175.28},
-    {"id": "IVC", "name": "Invercargill", "latitude": -46.43, "longitude": 168.36},
-    {"id": "KBZ", "name": "Kaikoura", "latitude": -42.4, "longitude": 173.68},
-    {"id": "KKE", "name": "Kerikeri", "latitude": -35.22, "longitude": 173.97},
-    {"id": "LVN", "name": "Levin", "latitude": -40.63, "longitude": 175.28},
-    {"id": "MON", "name": "Mount Cook", "latitude": -43.73, "longitude": 170.1},
-    {"id": "MRO", "name": "Masterton", "latitude": -40.96, "longitude": 175.66},
-    {"id": "NPE", "name": "Napier", "latitude": -39.48, "longitude": 176.92},
-    {"id": "NPL", "name": "New Plymouth", "latitude": -39.07, "longitude": 174.08},
-    {"id": "NSN", "name": "Nelson", "latitude": -41.27, "longitude": 173.28},
-    {"id": "PMR", "name": "Palmerston North", "latitude": -40.35, "longitude": 175.62},
-    {"id": "TEU", "name": "Te Anau", "latitude": -45.41, "longitude": 167.72},
-    {"id": "TIU", "name": "Timaru", "latitude": -44.4, "longitude": 171.26},
-    {"id": "TKZ", "name": "Tokoroa", "latitude": -38.23, "longitude": 175.87},
-    {"id": "TMZ", "name": "Thames", "latitude": -37.13, "longitude": 175.53},
-    {"id": "TRG", "name": "Tauranga", "latitude": -37.69, "longitude": 176.17},
-    {"id": "TUO", "name": "Taupo", "latitude": -38.68, "longitude": 176.08},
-    {"id": "ROT", "name": "Rotorua", "latitude": -38.14, "longitude": 176.25},
-    {"id": "WHK", "name": "Whakatane", "latitude": -37.98, "longitude": 177.0},
-    {"id": "WHO", "name": "Franz Josef", "latitude": -43.35, "longitude": 170.17},
-    {"id": "WLG", "name": "Wellington", "latitude": -41.3, "longitude": 174.78},
-    {"id": "WSZ", "name": "Westport", "latitude": -41.75, "longitude": 171.58},
-    {"id": "ZWG", "name": "Whanganui", "latitude": -39.93, "longitude": 175.05},
-    {"id": "WRE", "name": "Whangarei", "latitude": -35.72, "longitude": 174.32},
-    {"id": "ZTR", "name": "Turangi", "latitude": -39.0, "longitude": 175.93},
-    {"id": "ZOT", "name": "Otira", "latitude": -42.78, "longitude": 171.54},
-    {"id": "ZHT", "name": "Haast", "latitude": -43.88, "longitude": 169.06},
-    {"id": "ZHS", "name": "Hanmer Springs", "latitude": -42.54, "longitude": 172.78},
-    {"id": "ZQN", "name": "Queenstown", "latitude": -45.02, "longitude": 168.69},
-]
+
+locations_filepath = Path(Path(__file__).parent, 'locations.json')
+with open(locations_filepath, 'r') as locations_file:
+    LOCATIONS = json.load(locations_file)
+
+nz_ids_filepath = Path(Path(__file__).parent, 'nz_ids.json')
+with open(nz_ids_filepath, 'r') as nz_ids_file:
+    NZ_IDS = json.load(nz_ids_file)
 
 LOCATIONS_BY_ID = {location["id"]: location for location in LOCATIONS}
 
-LOCATION_LISTS = [
-    {
-        "id": "NZ",
-        "name": "Default NZ locations",
-        "locations": list(map(lambda loc: loc["id"], LOCATIONS)),
+
+LOCATION_LISTS = {
+    "HB": {
+        "id": "HB",
+        "name": "Hawk's Bay high res grid with vs30",
+        "locations": [loc["id"] for loc in LOCATIONS if "hb_" in loc["id"]],
     },
-    {
+    "NZ": {"id": "NZ", "name": "Default NZ locations", "locations": NZ_IDS},
+    "NZ2": {
         "id": "NZ2",
         "name": "Main Cities NZ",
         "locations": ["WLG", "CHC", "DUD", "NPL", "AKL", "ROT", "HLZ"],
     },
-]
+    "SRWG214": {
+        "id": "SRWG214",
+        "name": "Seismic Risk Working Group NZ code locations",
+        # "locations": list(map(lambda idn: f"srg_{idn}", range(214))),
+        "locations": [loc["id"] for loc in LOCATIONS if "srg_" in loc["id"]],
+    },
+    "ALL": {
+        "id": "ALL",
+        "name": "Seismic Risk Working Group NZ code locations",
+        "locations": list(map(lambda loc: loc["id"], LOCATIONS)),
+    },
+}
 
 
 def location_by_id(location_code):
-    return LOCATIONS_BY_ID[location_code]
+    return LOCATIONS_BY_ID.get(location_code)
 
 
 if __name__ == "__main__":
