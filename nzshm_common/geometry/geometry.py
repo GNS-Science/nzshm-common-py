@@ -48,7 +48,7 @@ BA_POLYGON_WKT = (
 
 def backarc_polygon() -> Polygon:
     """
-    Retrieve the backarc polygon from json and return geopandas object
+    Retrieve the backarc polygon from json and return shapely Polygon object
     """
 
     return shapely.wkt.loads(BA_POLYGON_WKT)

@@ -1,16 +1,7 @@
 import unittest
 import math
-import random
 
 from nzshm_common.grids import load_grid, RegionGrid
-
-
-try:
-    import geopandas as gpd  # noqa
-
-    HAVE_GPD = True
-except ImportError:
-    HAVE_GPD = False
 
 try:
     import shapely  # noqa
@@ -41,20 +32,6 @@ class TestSquareTile(unittest.TestCase):
         print('cell spacing', cells[0].distance(cells[1]))
         print('cell exterior', list(cells[0].exterior.coords))
         self.assertAlmostEqual(cells[0].distance(cells[1]), 0.0)
-
-    @unittest.skipUnless(HAVE_SHAPELY and HAVE_GPD, "Test requires optional modules: shapely + geopandas.")
-    def test_build_geojson_from_squares_pt1(self):
-        grid = RegionGrid['NZ_0_1_NB_1_1']
-        grid_pts = grid.load()
-
-        locs, geometry, values = [], [], []
-        for pt in grid_pts:
-            locs.append((pt[1], pt[0]))
-            geometry.append(create_square_tile(grid.resolution, pt[1], pt[0]))
-            values.append(random.randint(0, 100000))
-
-        gdf = gpd.GeoDataFrame(data=dict(locs=locs, geometry=geometry, values=values))
-        self.assertEqual(gdf.shape[0], len(grid_pts))
 
 
 # TODO: need a different grid layout...
