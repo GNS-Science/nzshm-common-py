@@ -49,6 +49,3 @@ def create_backarc_polygon() -> GeoDataFrame:
 
     poly_filepath = Path(Path(__file__).parent, 'backarc_polygon.json')
     return geopandas.read_file(poly_filepath)
-
-
-BACKARC_POLYGON = create_backarc_polygon()
