@@ -1,10 +1,8 @@
 """Simple polygon builder methods."""
 
 import math
-from pathlib import Path
 
-import geopandas
-from geopandas.geodataframe import GeoDataFrame
+import shapely.wkt
 from shapely.geometry import Polygon
 
 
@@ -42,10 +40,15 @@ def create_square_tile(dim: float, x: float, y: float):
     return Polygon(c)
 
 
-def create_backarc_polygon() -> GeoDataFrame:
+BA_POLYGON_WKT = (
+    "POLYGON ((177.2 -37.715, 176.2 -38.72, 175.375 -39.27, "
+    "174.25 -40, 173.1 -39.183, 171.7 -34.76, 173.54 -33.22, 177.2 -37.715))"
+)
+
+
+def backarc_polygon() -> Polygon:
     """
     Retrieve the backarc polygon from json and return geopandas object
     """
 
-    poly_filepath = Path(Path(__file__).parent, 'backarc_polygon.json')
-    return geopandas.read_file(poly_filepath)
+    return shapely.wkt.loads(BA_POLYGON_WKT)
