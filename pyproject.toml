@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nzshm-common"
-version = "0.5.0"
+version = "0.5.1"
 homepage = "https://github.com/GNS-Science/nzshm-common-py"
 description = "A small pure python library for shared NZ NSHM data like locations."
 authors = ["GNS Science <chrisbc@artisan.co.nz>"]
