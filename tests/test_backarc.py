@@ -1,6 +1,13 @@
-from shapely.geometry import Point
+import unittest
 
-from nzshm_common.geometry.geometry import create_backarc_polygon
+try:
+    import shapely  # noqa
+    from shapely.geometry import Point
+    from nzshm_common.geometry.geometry import backarc_polygon
+
+    HAVE_SHAPELY = True
+except ImportError:
+    HAVE_SHAPELY = False
 
 LOCATIONS_W_BACKARC = [
     ("AKL", 174.77, -36.87, 1),
@@ -45,9 +52,9 @@ LOCATIONS_W_BACKARC_BY_ID = {
 }
 
 
+@unittest.skipUnless(HAVE_SHAPELY, "Test requires optional shapely module.")
 def test_backarc_polygon():
 
-    backarc_polygon = create_backarc_polygon()
     for location in LOCATIONS_W_BACKARC_BY_ID.values():
-        print(backarc_polygon.contains(Point(location['longitude'], location['latitude']))[0], location['backarc'])
-        assert backarc_polygon.contains(Point(location['longitude'], location['latitude']))[0] == location['backarc']
+        print(backarc_polygon().contains(Point(location['longitude'], location['latitude'])), location['backarc'])
+        assert backarc_polygon().contains(Point(location['longitude'], location['latitude'])) == location['backarc']
