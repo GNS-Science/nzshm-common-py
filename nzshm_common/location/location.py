@@ -35,6 +35,11 @@ LOCATION_LISTS = {
         # "locations": list(map(lambda idn: f"srg_{idn}", range(214))),
         "locations": [loc["id"] for loc in LOCATIONS if "srg_" in loc["id"]],
     },
+    "TP": {
+        "id": "TP",
+        "name": "Transpower critical sites",
+        "locations": [loc["id"] for loc in LOCATIONS if "tp_" in loc["id"]],
+    },
     "ALL": {
         "id": "ALL",
         "name": "Seismic Risk Working Group NZ code locations",

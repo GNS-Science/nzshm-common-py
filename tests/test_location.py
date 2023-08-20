@@ -9,8 +9,9 @@ def test_location_keys_unique():
 def test_location_lists():
     assert len(location.LOCATION_LISTS["NZ"]["locations"]) == 36
     assert len(location.LOCATION_LISTS["SRWG214"]["locations"]) == 214
-    assert len(location.LOCATION_LISTS["ALL"]["locations"]) == 214 + 36 + 19480
+    assert len(location.LOCATION_LISTS["ALL"]["locations"]) == 214 + 36 + 19480 + 196
     assert len(location.LOCATION_LISTS["HB"]["locations"]) == 19480
+    assert len(location.LOCATION_LISTS["TP"]["locations"]) == 196
 
 
 def test_vs30():
@@ -50,3 +51,15 @@ def test_rounded_locations():
 
     id = 'srg_186'
     assert CodedLocation(*get_lat_lon(id), 0.001).code == "-44.379~171.230"
+
+def test_tanspower():
+    asb = location.LOCATIONS_BY_ID['tp_ASB']
+    assert asb['latitude'] == -43.94193073740
+    assert asb['longitude'] == 171.80058963200
+
+    hlzo = location.LOCATIONS_BY_ID['tp_HLZO']
+    assert hlzo['name'] == 'Hamilton National Coordination Centre'
+    assert hlzo['latitude'] ==  -37.83267708
+    assert hlzo['longitude'] == 175.3017109
+
+
