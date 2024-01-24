@@ -1,12 +1,14 @@
 import json
 from pathlib import Path
 
+from nzshm_common.util import decompress_string
+
 # Omitting country for now, focus on NZ
 # https://service.unece.org/trade/locode/nz.htm
 
-locations_filepath = Path(Path(__file__).parent, 'locations.json')
+locations_filepath = Path(Path(__file__).parent, 'locations.comp')
 with open(locations_filepath, 'r') as locations_file:
-    LOCATIONS = json.load(locations_file)
+    LOCATIONS = json.loads(decompress_string(locations_file.read()))
 
 nz_ids_filepath = Path(Path(__file__).parent, 'nz_ids.json')
 with open(nz_ids_filepath, 'r') as nz_ids_file:
@@ -32,6 +34,11 @@ LOCATION_LISTS = {
         "name": "Seismic Risk Working Group NZ code locations",
         # "locations": list(map(lambda idn: f"srg_{idn}", range(214))),
         "locations": [loc["id"] for loc in LOCATIONS if "srg_" in loc["id"]],
+    },
+    "TP": {
+        "id": "TP",
+        "name": "Transpower critical sites",
+        "locations": [loc["id"] for loc in LOCATIONS if "tp_" in loc["id"]],
     },
     "ALL": {
         "id": "ALL",
