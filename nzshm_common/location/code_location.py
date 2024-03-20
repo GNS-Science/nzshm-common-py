@@ -13,14 +13,22 @@ class CodedLocation:
     lon: float = field(hash=True)
     resolution: float = field(hash=True)
 
-    def __init__(self, lat, lon, resolution):
+    def __init__(self, lat: float, lon: float, resolution: float) -> None:
+        """
+        Create a CodedLocation instantce.
+
+        Arguments:
+            lat: latitude
+            lon: longitude
+            resolution: the resolution used to resolve the location
+        """
         assert 0 < resolution < 180
 
         self.grid_res = decimal.Decimal(str(resolution).rstrip("0"))
-        self.display_places = max(abs(self.grid_res.as_tuple().exponent), 1)
+        self.display_places = max(abs(self.grid_res.as_tuple().exponent), 1)  # type: ignore
 
         div_res = 1 / float(self.grid_res)
-        places = abs(decimal.Decimal(div_res).as_tuple().exponent)
+        places = abs(decimal.Decimal(div_res).as_tuple().exponent)  # type: ignore
 
         self.lon = round(lon * div_res, places) / div_res
         self.lat = round(lat * div_res, places) / div_res
@@ -30,6 +38,9 @@ class CodedLocation:
 
     @property
     def code(self) -> str:
+        """
+        The string code for the location expressed as latitude~longidue
+        """
         return self._code
 
     def resample(self, resolution: float) -> "CodedLocation":

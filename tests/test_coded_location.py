@@ -6,7 +6,7 @@ from nzshm_common.grids.region_grid import load_grid
 import random
 
 GRID_02 = load_grid('NZ_0_2_NB_1_1')
-LOCS = [CodedLocation(loc[0], loc[1], 0.001) for loc in GRID_02[20:50]]
+LOCS = [CodedLocation(loc[0], loc[1], 0.001) for loc in GRID_02[20:50]]  # type: ignore
 
 
 def test_coded_location_is_hashable():

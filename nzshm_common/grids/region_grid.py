@@ -1,5 +1,6 @@
 from collections import namedtuple
 from enum import Enum
+from typing import Tuple
 
 from nzshm_common.grids.nz_0_1_nb_1_v0 import NZ01nb1v0
 from nzshm_common.grids.nz_0_1_nb_1_v1 import NZ01nb1v1
@@ -40,5 +41,5 @@ class RegionGrid(Enum):
         return self.grid.load()
 
 
-def load_grid(gri_name: str) -> list:
+def load_grid(gri_name: str) -> Tuple[float, float]:
     return RegionGrid[gri_name].load()
