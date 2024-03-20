@@ -16,7 +16,7 @@ import csv
 import json
 from collections import namedtuple
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, Iterable, List, Optional, Tuple
 
 from nzshm_common.grids.region_grid import load_grid
 from nzshm_common.location.code_location import CodedLocation
@@ -95,7 +95,7 @@ def location_by_id(location_code: str) -> Optional[Dict[str, Any]]:
     return LOCATIONS_BY_ID.get(location_code)
 
 
-def get_locations(locations: List[str], resolution: float = 0.001) -> List[CodedLocation]:
+def get_locations(locations: Iterable[str], resolution: float = 0.001) -> List[CodedLocation]:
     """
     Get the coded locations from a list of identifiers.
 
