@@ -114,24 +114,23 @@ def get_locations(locations: Iterable[str], resolution: float = 0.001) -> List[C
         coded_locations: a list of coded locaitons
     """
     coded_locations: List[CodedLocation] = []
-    for location_spec in locations:
-        if '~' in location_spec:
-            lat, lon = location_spec.split('~')
+    for loc_id in locations:
+        location_id = str(loc_id)
+        if Path(location_id).exists():
+            coded_locations += _load_csv(Path(location_id), resolution)
+        elif '~' in location_id:
+            lat, lon = location_id.split('~')
             coded_locations.append(CodedLocation(float(lat), float(lon), resolution))
-        elif location_by_id(location_spec):
-            coded_locations.append(CodedLocation(*_lat_lon(location_spec), resolution))  # type: ignore
-        elif LOCATION_LISTS.get(location_spec):
-            location_ids = LOCATION_LISTS[location_spec]["locations"]
+        elif location_by_id(location_id):
+            coded_locations.append(CodedLocation(*_lat_lon(location_id), resolution))  # type: ignore
+        elif LOCATION_LISTS.get(location_id):
+            location_ids = LOCATION_LISTS[location_id]["locations"]
             coded_locations += [CodedLocation(*_lat_lon(_id), resolution) for _id in location_ids]  # type: ignore
-        elif isinstance(location_spec, Path):
-            coded_locations += _load_csv(location_spec, resolution)
-        elif Path(location_spec).exists():
-            coded_locations += _load_csv(Path(location_spec), resolution)
         else:
             try:
-                coded_locations += [CodedLocation(*loc, resolution) for loc in load_grid(location_spec)]  # type: ignore
+                coded_locations += [CodedLocation(*loc, resolution) for loc in load_grid(location_id)]  # type: ignore
             except KeyError:
-                msg = "location {} is not a valid location identifier".format(location_spec)
+                msg = "location {} is not a valid location identifier".format(location_id)
                 raise KeyError(msg)
 
     return coded_locations

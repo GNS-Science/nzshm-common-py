@@ -3,7 +3,7 @@ from pathlib import Path
 from nzshm_common.location.location import get_locations, LOCATION_LISTS
 from nzshm_common.location.code_location import CodedLocation
 
-LOCATIONS_FILEPATH = str(Path(__file__).parent / 'fixtures' / 'location_file.csv')
+LOCATIONS_FILEPATH = Path(__file__).parent / 'fixtures' / 'location_file.csv'
 
 
 def test_id():
