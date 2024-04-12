@@ -15,14 +15,14 @@ class CodedLocation:
 
     def __init__(self, lat: float, lon: float, resolution: float) -> None:
         """
-        Create a CodedLocation instantce.
+        Create a CodedLocation instance.
 
         Arguments:
             lat: latitude
             lon: longitude
             resolution: the resolution used to resolve the location
         """
-        assert 0 < resolution < 180
+        assert 0 < resolution < 180, "Resolution must be between 0 and 180 degrees."
 
         self.grid_res = decimal.Decimal(str(resolution).rstrip("0"))
         self.display_places = max(abs(self.grid_res.as_tuple().exponent), 1)  # type: ignore
@@ -39,7 +39,7 @@ class CodedLocation:
     @property
     def code(self) -> str:
         """
-        The string code for the location expressed as latitude~longidue
+        The string code for the location expressed as latitude~longitude.
         """
         return self._code
 

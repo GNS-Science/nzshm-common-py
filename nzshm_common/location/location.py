@@ -80,7 +80,7 @@ def _load_csv(locations_filepath, resolution):
 
 def location_by_id(location_code: str) -> Optional[Dict[str, Any]]:
     """
-    Get the CodedLocation for a locatation identified by an id
+    Get the CodedLocation for a locatation identified by an id.
 
     Parameters:
         location_code: the code (e.g. "WLG") for the location

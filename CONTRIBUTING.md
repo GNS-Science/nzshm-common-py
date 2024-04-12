@@ -59,7 +59,7 @@ Ready to contribute? Here's how to set up `nzhsm-common-py` for local developmen
 4. Install dependencies and start your virtualenv:
 
    ```
-   $ poetry install -E test -E doc -E dev
+   $ poetry install --all-extras
    ```
 
 5. Create a branch for local development:
@@ -101,11 +101,12 @@ Before you submit a pull request, check that it meets these guidelines:
 
 ## Tips
 
+To run a subset of tests, try:
 ```
 $ poetry run pytest tests/????.py
+$ poetry run pytest -k somekeyword
 ```
 
-To run a subset of tests.
 
 ## Deploying
 
