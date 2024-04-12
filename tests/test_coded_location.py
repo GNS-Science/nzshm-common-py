@@ -1,3 +1,4 @@
+from contextlib import contextmanager
 import pytest
 import unittest
 
@@ -110,3 +111,25 @@ def test_downsample_oh_point_one(lat, lon, expected):
 def test_downsample_oh_point_oh_five(lat, lon, expected):
     c = CodedLocation(lat, lon, 0.05)
     assert c.downsample(0.05).code == expected
+
+
+@contextmanager
+def does_not_raise():
+    yield
+
+
+@pytest.mark.parametrize(
+    "resolution, expectation",
+    [
+        (-0.1, pytest.raises(AssertionError)),
+        (0.0, pytest.raises(AssertionError)),
+        (0.05, does_not_raise()),
+        (0.1, does_not_raise()),
+        (150, does_not_raise()),
+        (180, pytest.raises(AssertionError)),
+    ],
+)
+def test_resolution_bounds(resolution, expectation):
+    """Ensure invalid resolutions throw an assertion error before calculating."""
+    with expectation:
+        CodedLocation(-41.333, 174.78, resolution)
