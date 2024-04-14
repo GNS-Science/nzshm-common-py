@@ -108,10 +108,10 @@ def get_locations(locations: Iterable[str], resolution: float = 0.001) -> List[C
 
     Parameters:
         locations: a list of location identifiers
-        resolution: the resulution used by CodedLocation
+        resolution: the resolution used by CodedLocation
 
     Returns:
-        coded_locations: a list of coded locaitons
+        coded_locations: a list of coded locations
     """
     coded_locations: List[CodedLocation] = []
     for loc_id in locations:
