@@ -1,3 +1,4 @@
+from contextlib import contextmanager
 import pytest
 import unittest
 
@@ -6,7 +7,7 @@ from nzshm_common.grids.region_grid import load_grid
 import random
 
 GRID_02 = load_grid('NZ_0_2_NB_1_1')
-LOCS = [CodedLocation(loc[0], loc[1], 0.001) for loc in GRID_02[20:50]]
+LOCS = [CodedLocation(loc[0], loc[1], 0.001) for loc in GRID_02[20:50]]  # type: ignore
 
 
 def test_coded_location_is_hashable():
@@ -110,3 +111,25 @@ def test_downsample_oh_point_one(lat, lon, expected):
 def test_downsample_oh_point_oh_five(lat, lon, expected):
     c = CodedLocation(lat, lon, 0.05)
     assert c.downsample(0.05).code == expected
+
+
+@contextmanager
+def does_not_raise():
+    yield
+
+
+@pytest.mark.parametrize(
+    "resolution, expectation",
+    [
+        (-0.1, pytest.raises(AssertionError)),
+        (0.0, pytest.raises(AssertionError)),
+        (0.05, does_not_raise()),
+        (0.1, does_not_raise()),
+        (150, does_not_raise()),
+        (180, pytest.raises(AssertionError)),
+    ],
+)
+def test_resolution_bounds(resolution, expectation):
+    """Ensure invalid resolutions throw an assertion error before calculating."""
+    with expectation:
+        CodedLocation(-41.333, 174.78, resolution)

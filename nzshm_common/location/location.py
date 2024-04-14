@@ -1,5 +1,25 @@
+"""
+This module contains constants and functions for refereing to location or list of locations by an identifier
+
+Constants:
+    LOCATION_LISTS - a dictionary of location lists
+
+Examples:
+    >>> from nzhsm_common.location.location import LOCATION_LISTS, location_by_id
+    >>> LOCATION_LISTS["NZ"]["locations"][0]
+    'AKL'
+    >>> location_by_id(LOCATION_LISTS["NZ"]["locations"][0])
+    {'id': 'AKL', 'name': 'Auckland', 'latitude': -36.87, 'longitude': 174.77}
+"""
+
+import csv
 import json
+from collections import namedtuple
 from pathlib import Path
+from typing import Any, Dict, Iterable, List, Optional, Tuple
+
+from nzshm_common.grids.region_grid import load_grid
+from nzshm_common.location.code_location import CodedLocation
 
 # Omitting country for now, focus on NZ
 # https://service.unece.org/trade/locode/nz.htm
@@ -12,7 +32,7 @@ nz_ids_filepath = Path(Path(__file__).parent, 'nz_ids.json')
 with open(nz_ids_filepath, 'r') as nz_ids_file:
     NZ_IDS = json.load(nz_ids_file)
 
-LOCATIONS_BY_ID = {location["id"]: location for location in LOCATIONS}
+LOCATIONS_BY_ID: Dict[str, Any] = {location["id"]: location for location in LOCATIONS}
 
 
 LOCATION_LISTS = {
@@ -41,8 +61,79 @@ LOCATION_LISTS = {
 }
 
 
-def location_by_id(location_code):
+def _lat_lon(_id) -> Optional[Tuple[float, float]]:
+    if location_by_id(_id):
+        return (location_by_id(_id)['latitude'], location_by_id(_id)['longitude'])  # type: ignore
+    return None
+
+
+def _load_csv(locations_filepath, resolution):
+    locs = []
+    with locations_filepath.open('r') as locations_file:
+        reader = csv.reader(locations_file)
+        Location = namedtuple("Location", next(reader), rename=True)
+        for row in reader:
+            location = Location(*row)
+            locs.append(CodedLocation(lat=float(location.lat), lon=float(location.lon), resolution=resolution))
+    return locs
+
+
+def location_by_id(location_code: str) -> Optional[Dict[str, Any]]:
+    """
+    Get the CodedLocation for a locatation identified by an id.
+
+    Parameters:
+        location_code: the code (e.g. "WLG") for the location
+
+    Returns:
+        coded location of location_code
+
+    Examples:
+        >>> location_by_id("WLG")
+        {'id': 'WLG', 'name': 'Wellington', 'latitude': -41.3, 'longitude': 174.78}
+    """
     return LOCATIONS_BY_ID.get(location_code)
+
+
+def get_locations(locations: Iterable[str], resolution: float = 0.001) -> List[CodedLocation]:
+    """
+    Get the coded locations from a list of identifiers.
+
+    Identifiers can be any combination of:
+        - a location string (latitude~longitude)
+        - location list (key in nzhsm_common.location.location.LOCATION_LISTS)
+        - location code (e.g. "WLG")
+        - grid name in nzshm_common.grids.region_grid.RegionGrid
+        - csv file with at least a column headed "lat" and a column headed "lon" (any other columns will be ignored)
+
+    Parameters:
+        locations: a list of location identifiers
+        resolution: the resolution used by CodedLocation
+
+    Returns:
+        coded_locations: a list of coded locations
+    """
+    coded_locations: List[CodedLocation] = []
+    for loc_id in locations:
+        location_id = str(loc_id)
+        if Path(location_id).exists():
+            coded_locations += _load_csv(Path(location_id), resolution)
+        elif '~' in location_id:
+            lat, lon = location_id.split('~')
+            coded_locations.append(CodedLocation(float(lat), float(lon), resolution))
+        elif location_by_id(location_id):
+            coded_locations.append(CodedLocation(*_lat_lon(location_id), resolution))  # type: ignore
+        elif LOCATION_LISTS.get(location_id):
+            location_ids = LOCATION_LISTS[location_id]["locations"]
+            coded_locations += [CodedLocation(*_lat_lon(_id), resolution) for _id in location_ids]  # type: ignore
+        else:
+            try:
+                coded_locations += [CodedLocation(*loc, resolution) for loc in load_grid(location_id)]  # type: ignore
+            except KeyError:
+                msg = "location {} is not a valid location identifier".format(location_id)
+                raise KeyError(msg)
+
+    return coded_locations
 
 
 if __name__ == "__main__":
