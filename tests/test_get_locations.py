@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from nzshm_common.location.location import get_locations, LOCATION_LISTS
 from nzshm_common.location.code_location import CodedLocation
+from nzshm_common.location.location import LOCATION_LISTS, get_locations
 
 LOCATIONS_FILEPATH = Path(__file__).parent / 'fixtures' / 'location_file.csv'
 

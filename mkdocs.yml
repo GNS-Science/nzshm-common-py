@@ -15,6 +15,7 @@ nav:
     - location (package):
       - location (module): api/location/location.md
       - CodedLocation (class): api/location/code_location.CodedLocation.md
+      - types (module): api/location/types.md
   - Contributing: contributing.md
   - Changelog: changelog.md
 theme:

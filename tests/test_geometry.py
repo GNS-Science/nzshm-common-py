@@ -1,10 +1,11 @@
-import unittest
 import math
+import unittest
 
-from nzshm_common.grids import load_grid, RegionGrid
+from nzshm_common.grids import RegionGrid, load_grid
 
 try:
     import shapely  # noqa
+
     from nzshm_common.geometry.geometry import create_hexagon, create_square_tile  # these require shapely
 
     HAVE_SHAPELY = True

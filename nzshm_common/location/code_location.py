@@ -1,6 +1,8 @@
 import decimal
 from dataclasses import dataclass, field
 
+from nzshm_common.location.types import LatLon
+
 
 @dataclass(init=False, unsafe_hash=True)
 class CodedLocation:
@@ -35,6 +37,21 @@ class CodedLocation:
         self.resolution = resolution
 
         self._code = f"{self.lat:.{self.display_places}f}~{self.lon:.{self.display_places}f}"
+
+    @property
+    def as_tuple(self) -> LatLon:
+        """
+        Convert to a `LatLon(latitude, longitude)` named tuple.
+
+        Example:
+            ```py
+            >>> nzshm_common.location.get_locations(["CHC"])[0]
+            CodedLocation(lat=-43.53, lon=172.63, resolution=0.001)
+            >>> nzshm_common.location.get_locations(["CHC"])[0].as_tuple.latitude
+            -43.53
+            ```
+        """
+        return LatLon(self.lat, self.lon)
 
     @property
     def code(self) -> str:

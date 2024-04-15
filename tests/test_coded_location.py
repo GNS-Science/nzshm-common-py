@@ -1,10 +1,12 @@
-from contextlib import contextmanager
-import pytest
+import random
 import unittest
 
-from nzshm_common.location import CodedLocation
+import pytest
+
 from nzshm_common.grids.region_grid import load_grid
-import random
+from nzshm_common.location import CodedLocation
+
+from tests.helpers import does_not_raise
 
 GRID_02 = load_grid('NZ_0_2_NB_1_1')
 LOCS = [CodedLocation(loc[0], loc[1], 0.001) for loc in GRID_02[20:50]]  # type: ignore
@@ -111,11 +113,6 @@ def test_downsample_oh_point_one(lat, lon, expected):
 def test_downsample_oh_point_oh_five(lat, lon, expected):
     c = CodedLocation(lat, lon, 0.05)
     assert c.downsample(0.05).code == expected
-
-
-@contextmanager
-def does_not_raise():
-    yield
 
 
 @pytest.mark.parametrize(

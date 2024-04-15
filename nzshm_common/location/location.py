@@ -1,5 +1,5 @@
 """
-This module contains constants and functions for refereing to location or list of locations by an identifier
+This module contains constants and functions for referring to location or list of locations by an identifier.
 
 Constants:
     LOCATION_LISTS - a dictionary of location lists
@@ -80,7 +80,7 @@ def _load_csv(locations_filepath, resolution):
 
 def location_by_id(location_code: str) -> Optional[Dict[str, Any]]:
     """
-    Get the CodedLocation for a locatation identified by an id.
+    Get the CodedLocation for a location identified by an id.
 
     Parameters:
         location_code: the code (e.g. "WLG") for the location
