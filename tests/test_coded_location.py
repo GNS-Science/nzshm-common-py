@@ -3,9 +3,8 @@ import unittest
 
 import pytest
 
+from nzshm_common import CodedLocation, LatLon
 from nzshm_common.grids.region_grid import load_grid
-from nzshm_common.location import CodedLocation
-
 from tests.helpers import does_not_raise
 
 GRID_02 = load_grid('NZ_0_2_NB_1_1')
@@ -48,6 +47,16 @@ oh_point_five_expected = [
     (-45.27, 171.8, '-45.5~172.0'),
     (-41.3, 174.783, '-41.5~175.0'),  # WLG
 ]
+
+
+def test_as_tuple():
+    c = CodedLocation(-45.2, 175.2, 0.1)
+
+    assert isinstance(c.as_tuple, LatLon)
+    assert c.as_tuple.latitude == -45.2
+    assert c.as_tuple.longitude == 175.2
+    assert c.as_tuple[0] == -45.2
+    assert c.as_tuple[1] == 175.2
 
 
 @pytest.mark.parametrize("lat,lon,expected", oh_point_five_expected)
