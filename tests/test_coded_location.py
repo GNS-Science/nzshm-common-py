@@ -4,6 +4,7 @@ import unittest
 import pytest
 
 from nzshm_common import CodedLocation, LatLon
+from nzshm_common.constants import DEFAULT_RESOLUTION
 from nzshm_common.grids.region_grid import load_grid
 from tests.helpers import does_not_raise
 
@@ -64,6 +65,19 @@ def test_coded_location_equality(lat, lon, expected):
     c0 = CodedLocation(lat, lon, 0.5)
     c1 = CodedLocation(lat, lon, 0.5)
     assert c0 == c1
+
+
+def test_coded_location_helper():
+    coded_loc = CodedLocation.from_tuple((-45.27, 171.14))
+    assert isinstance(coded_loc, CodedLocation), "Return type should be CodedLocation"
+    assert coded_loc.resolution == DEFAULT_RESOLUTION, "Should have default resolution"
+    assert coded_loc.lat == -45.27, "Latitude should match"
+    assert coded_loc.lon == 171.14, "Longitude should match"
+
+    coded_loc_lores = CodedLocation.from_tuple((-45.27, 171.14), resolution=0.1)
+    assert coded_loc_lores.resolution == 0.1, "Should have lowered resolution"
+    assert coded_loc_lores.lat == -45.3, "Should have rounded latitude"
+    assert coded_loc_lores.lon == 171.1, "Should have rounded longitude"
 
 
 @pytest.mark.parametrize("lat,lon,expected", oh_point_five_expected)

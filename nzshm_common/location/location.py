@@ -18,6 +18,7 @@ from collections import namedtuple
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 
+from nzshm_common.constants import DEFAULT_RESOLUTION
 from nzshm_common.grids.region_grid import load_grid
 from nzshm_common.location.code_location import CodedLocation
 
@@ -95,7 +96,7 @@ def location_by_id(location_code: str) -> Optional[Dict[str, Any]]:
     return LOCATIONS_BY_ID.get(location_code)
 
 
-def get_locations(locations: Iterable[str], resolution: float = 0.001) -> List[CodedLocation]:
+def get_locations(locations: Iterable[str], resolution: float = DEFAULT_RESOLUTION) -> List[CodedLocation]:
     """
     Get the coded locations from a list of identifiers.
 
@@ -134,6 +135,58 @@ def get_locations(locations: Iterable[str], resolution: float = 0.001) -> List[C
                 raise KeyError(msg)
 
     return coded_locations
+
+
+def get_location_list_names() -> list[str]:
+    """
+    Return a list of valid location lists.
+
+    Examples:
+        >>> from nzshm_common import location
+        >>> location.get_location_list_names()
+        ['HB', 'NZ', 'NZ2', 'SRWG214', 'ALL']
+    """
+    return list(LOCATION_LISTS.keys())
+
+
+def get_location_list(
+    location_list_names: list[str], resolution: float = DEFAULT_RESOLUTION, sort_locations: bool = True
+) -> Iterable[CodedLocation]:
+    """
+    Get all coded locations within one or more lists.
+
+    Parameters:
+        location_list_names: a list of valid LOCATION_LIST keys
+        resolution: the resolution used by CodedLocation
+        sort_locations: (optional) whether to sort the CodedLocation values by code
+
+    Returns:
+        a list of coded locations
+
+
+    Examples:
+        >>> from nzshm_common import location
+        >>> get_location_list(["NZ", "SRWG214"])
+        [
+            CodedLocation(lat=-35.109, lon=173.262, resolution=0.001),
+            CodedLocation(lat=-35.22, lon=173.97, resolution=0.001),
+            ...
+        ]
+    """
+    # Merge location lists, ensuring unique keys.
+    location_keyset = set([loc for name in location_list_names for loc in LOCATION_LISTS[name]["locations"]])
+    coded_locations = [
+        CodedLocation(
+            lat=LOCATIONS_BY_ID[loc]["latitude"],
+            lon=LOCATIONS_BY_ID[loc]["longitude"],
+            resolution=resolution,
+        )
+        for loc in location_keyset
+    ]
+    if sort_locations:
+        return sorted(coded_locations, key=lambda x: x.code)
+    else:
+        return coded_locations
 
 
 if __name__ == "__main__":

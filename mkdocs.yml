@@ -12,6 +12,7 @@ nav:
   - Installation: installation.md
   - Usage: usage.md
   - API Reference:
+    - constants: api/constants.md
     - location (package):
       - location (module): api/location/location.md
       - CodedLocation (class): api/location/code_location.CodedLocation.md
