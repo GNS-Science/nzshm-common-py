@@ -1,7 +1,7 @@
 from typing import Iterable
 
 from nzshm_common.constants import DEFAULT_RESOLUTION
-from nzshm_common.grids import get_location_grid, load_grid
+from nzshm_common.grids import get_location_grid, get_location_grid_names, load_grid
 from nzshm_common.location import CodedLocation
 
 
@@ -84,3 +84,11 @@ def test_get_location_grid_downsampling():
     assert (
         grid_downsampled[0].as_tuple == resample.as_tuple
     ), "CodedLocations at different resolutions can be compared as LatLon values"
+
+
+def test_get_location_grid_names():
+    name_list = get_location_grid_names()
+    assert isinstance(name_list, Iterable), "Should be Iterable type"
+    assert "NZ_0_1_NB_1_0" in name_list, "Should include NZ_... grids"
+    assert "WLG_0_01_nb_1_1" in name_list, "Should include WLG_... grids"
+    assert "SRWG214" not in name_list, "Should not include location list names"

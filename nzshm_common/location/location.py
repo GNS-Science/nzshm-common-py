@@ -16,11 +16,12 @@ import csv
 import json
 from collections import namedtuple
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Optional, Tuple
+from typing import Any, Dict, Iterable, List, Optional
 
 from nzshm_common.constants import DEFAULT_RESOLUTION
 from nzshm_common.grids.region_grid import load_grid
 from nzshm_common.location.code_location import CodedLocation
+from nzshm_common.location.types import LatLon
 
 # Omitting country for now, focus on NZ
 # https://service.unece.org/trade/locode/nz.htm
@@ -62,9 +63,10 @@ LOCATION_LISTS = {
 }
 
 
-def _lat_lon(_id) -> Optional[Tuple[float, float]]:
-    if location_by_id(_id):
-        return (location_by_id(_id)['latitude'], location_by_id(_id)['longitude'])  # type: ignore
+def _lat_lon(_id) -> Optional[LatLon]:
+    loc = location_by_id(_id)
+    if loc:
+        return LatLon(loc['latitude'], loc['longitude'])
     return None
 
 
@@ -184,7 +186,7 @@ def get_location_list(
         for loc in location_keyset
     ]
     if sort_locations:
-        return sorted(coded_locations, key=lambda x: x.code)
+        return sorted(coded_locations)
     else:
         return coded_locations
 

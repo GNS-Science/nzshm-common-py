@@ -50,3 +50,7 @@ def test_rounded_locations():
 
     id = 'srg_186'
     assert CodedLocation(*get_lat_lon(id), 0.001).code == "-44.379~171.230"
+
+
+def test_missing_lat_lon_returns_None():
+    assert location._lat_lon("missingid") is None, "An unknown ID should return a None"

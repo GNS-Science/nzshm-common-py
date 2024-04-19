@@ -1,6 +1,12 @@
 import pytest
 
-from nzshm_common.location.location import DEFAULT_RESOLUTION, LOCATION_LISTS, get_location_list, get_locations
+from nzshm_common.location.location import (
+    DEFAULT_RESOLUTION,
+    LOCATION_LISTS,
+    get_location_list,
+    get_location_list_names,
+    get_locations,
+)
 
 
 def test_single_source():
@@ -18,7 +24,7 @@ def test_multiple_sources():
     assert len(location_list) == len(merged_locations), "List length equalling merge of two lists"
 
     # Ensure nothing weird happens if we include a list twice
-    location_list = get_location_list(["NZ", "NZ"])
+    location_list = get_location_list(["NZ", "NZ"], sort_locations=False)
     assert len(location_list) == len(
         LOCATION_LISTS["NZ"]["locations"]
     ), "Should match count for single NZ location list"
@@ -49,3 +55,10 @@ def test_resolution_override():
     assert (
         get_locations(["AKL"], resolution=custom_resolution)[0].code in location_list_codes
     ), "Should find Auckland code at custom resolution"
+
+
+def test_names():
+    name_list = get_location_list_names()
+    assert "NZ" in name_list, "Should contain NZ location list"
+    assert "SRWG214" in name_list, "Should contain SRWG214 location list"
+    assert "NZ_0_1_NB_1_0" not in name_list, "Should not include grid names"
