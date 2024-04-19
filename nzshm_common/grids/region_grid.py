@@ -102,20 +102,21 @@ def get_location_grid(location_grid_name: str, resolution: float = DEFAULT_RESOL
 
 def get_location_grid_names() -> Iterable[str]:
     """
-    Return a list of valid region grids.
+    Return a collection of of valid region grids.
 
-    Returns member names from the RegionGrid Enum class.
+    Returns:
+        member names from the RegionGrid Enum class.
 
     Examples:
         >>> from nzshm_common import grids
         >>> grids.get_location_grid_names()
-        [
+        dict_keys([
             'NZ_0_1_NB_1_0',
             'NZ_0_1_NB_1_1',
             'NZ_0_2_NB_1_1',
             'WLG_0_01_nb_1_1',
             'WLG_0_05_nb_1_1'
-        ]
+        ])
     """
 
     return RegionGrid.__members__.keys()

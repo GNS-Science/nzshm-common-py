@@ -40,8 +40,31 @@ class CodedLocation:
         self._code = f"{self.lat:.{self.display_places}f}~{self.lon:.{self.display_places}f}"
 
     def __lt__(self, other: "CodedLocation"):
-        """Comparator to allow sorting for CodedLocations."""
-        return self.code < other.code
+        """
+        Less-than comparator to enable sorting for CodedLocations.
+
+        Note:
+            Coded locations at different resolutions are not considered
+            equal. Use `.as_tuple` to check for numerical equivalency.
+
+        Examples:
+            >>> origin = CodedLocation(-11.11, 111.11, resolution=0.001)
+            >>> origin == CodedLocation(-11.11, 111.11, resolution=0.001)  # Equal
+            True
+            >>> origin == CodedLocation(-11.11, 111.11, resolution=0.01)  # Wrong resolution
+            False
+
+            >>> origin < CodedLocation(-11.12, 111.11, resolution=0.001)  # South of origin
+            False
+            >>> origin < CodedLocation(-11.10, 111.11, resolution=0.001)  # North of origin
+            True
+            >>> origin < CodedLocation(-11.11, 111.10, resolution=0.001)  # West of origin
+            False
+            >>> origin < CodedLocation(-11.11, 111.12, resolution=0.001)  # East of origin
+            True
+
+        """
+        return (self.lat < other.lat) or (self.lon < other.lon)
 
     @property
     def as_tuple(self) -> LatLon:
