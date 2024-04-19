@@ -1,6 +1,5 @@
 import decimal
 from dataclasses import dataclass, field
-from typing import Tuple, Union
 
 from nzshm_common.constants import DEFAULT_RESOLUTION
 from nzshm_common.location.types import LatLon
@@ -40,6 +39,10 @@ class CodedLocation:
 
         self._code = f"{self.lat:.{self.display_places}f}~{self.lon:.{self.display_places}f}"
 
+    def __lt__(self, other: "CodedLocation"):
+        """Comparator to allow sorting for CodedLocations."""
+        return self.code < other.code
+
     @property
     def as_tuple(self) -> LatLon:
         """
@@ -47,9 +50,11 @@ class CodedLocation:
 
         Example:
             ```py
-            >>> nzshm_common.location.get_locations(["CHC"])[0]
+            >>> from nzshm_common import location
+            >>> location.get_locations(["CHC"])[0]
             CodedLocation(lat=-43.53, lon=172.63, resolution=0.001)
-            >>> nzshm_common.location.get_locations(["CHC"])[0].as_tuple.latitude
+            >>> latitude, longitude = location.get_locations(["CHC"])[0].as_tuple
+            >>> latitude
             -43.53
             ```
         """
@@ -63,9 +68,7 @@ class CodedLocation:
         return self._code
 
     @classmethod
-    def from_tuple(
-        cls, location: Union[LatLon, Tuple[float, float]], resolution: float = DEFAULT_RESOLUTION
-    ) -> "CodedLocation":
+    def from_tuple(cls, location: LatLon, resolution: float = DEFAULT_RESOLUTION) -> "CodedLocation":
         """
         Create a `CodedLocation` from a tuple.
 

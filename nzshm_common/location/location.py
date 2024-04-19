@@ -166,7 +166,7 @@ def get_location_list(
 
     Examples:
         >>> from nzshm_common import location
-        >>> get_location_list(["NZ", "SRWG214"])
+        >>> location.get_location_list(["NZ", "SRWG214"])
         [
             CodedLocation(lat=-35.109, lon=173.262, resolution=0.001),
             CodedLocation(lat=-35.22, lon=173.97, resolution=0.001),

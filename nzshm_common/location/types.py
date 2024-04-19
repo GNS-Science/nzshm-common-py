@@ -12,9 +12,12 @@ from typing import NamedTuple
 
 class LatLon(NamedTuple):
     """
-    A lightweight type for `(latitude, longitude)` pairs.
+    A lightweight type for `(latitude, longitude)` float pairs.
+
+    This is a named tuple with latitude and longitude fields.
 
     Examples:
+        ```py
         >>> wlg = LatLon(-41.3, 174.78)
         >>> wlg
         LatLon(latitude=-41.3, longitude=174.78)
@@ -22,6 +25,7 @@ class LatLon(NamedTuple):
         -41.3
         >>> wlg[0]
         -41.3
+        ```
     """
 
     latitude: float

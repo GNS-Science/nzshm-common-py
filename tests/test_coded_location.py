@@ -68,12 +68,13 @@ def test_coded_location_equality(lat, lon, expected):
 
 
 def test_coded_location_helper():
-    coded_loc = CodedLocation.from_tuple((-45.27, 171.14))
+    coded_loc = CodedLocation.from_tuple(LatLon(latitude=-45.27, longitude=171.14))
     assert isinstance(coded_loc, CodedLocation), "Return type should be CodedLocation"
     assert coded_loc.resolution == DEFAULT_RESOLUTION, "Should have default resolution"
     assert coded_loc.lat == -45.27, "Latitude should match"
     assert coded_loc.lon == 171.14, "Longitude should match"
 
+    # A naked (latitude, longitude) tuple with the same values should work also.
     coded_loc_lores = CodedLocation.from_tuple((-45.27, 171.14), resolution=0.1)
     assert coded_loc_lores.resolution == 0.1, "Should have lowered resolution"
     assert coded_loc_lores.lat == -45.3, "Should have rounded latitude"
