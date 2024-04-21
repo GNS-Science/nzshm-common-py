@@ -1,7 +1,7 @@
 from collections import namedtuple
 from enum import Enum
 from functools import partial
-from typing import Iterable
+from typing import Iterable, List
 
 from nzshm_common.constants import DEFAULT_RESOLUTION
 from nzshm_common.grids.nz_0_1_nb_1_v0 import NZ01nb1v0
@@ -49,7 +49,7 @@ class RegionGrid(Enum):
         return self.grid.load()
 
 
-def load_grid(grid_name: str) -> list[LatLon]:
+def load_grid(grid_name: str) -> List[LatLon]:
     """
     Load values from a region grid as `LatLon` pairs.
 

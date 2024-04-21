@@ -139,7 +139,7 @@ def get_locations(locations: Iterable[str], resolution: float = DEFAULT_RESOLUTI
     return coded_locations
 
 
-def get_location_list_names() -> list[str]:
+def get_location_list_names() -> List[str]:
     """
     Return a list of valid location lists.
 
@@ -152,7 +152,7 @@ def get_location_list_names() -> list[str]:
 
 
 def get_location_list(
-    location_list_names: list[str], resolution: float = DEFAULT_RESOLUTION, sort_locations: bool = True
+    location_list_names: List[str], resolution: float = DEFAULT_RESOLUTION, sort_locations: bool = True
 ) -> Iterable[CodedLocation]:
     """
     Get all coded locations within one or more lists.
