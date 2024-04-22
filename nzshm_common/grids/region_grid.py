@@ -84,8 +84,8 @@ def get_location_grid(location_grid_name: str, resolution: float = DEFAULT_RESOL
         >>> from nzshm_common import grids
         >>> grids.get_location_grid("NZ_0_1_NB_1_0")
         [
-            CodedLocation(lat=-35.109, lon=173.262, resolution=0.001),
-            CodedLocation(lat=-35.22, lon=173.97, resolution=0.001),
+            CodedLocation(lat=-46.1, lon=166.4, resolution=0.001),
+            CodedLocation(lat=-46.0, lon=166.4, resolution=0.001)
             ...
         ]
     """

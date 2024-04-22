@@ -82,7 +82,7 @@ def test_coded_location_helper():
 
 
 @pytest.mark.parametrize("lat,lon,expected", oh_point_five_expected)
-def test_downsample_default_oh_point_five_no_downsampking_required(lat, lon, expected):
+def test_downsample_default_oh_point_five_no_downsampling_required(lat, lon, expected):
     print(f"lat {lat} lon {lon} -> {expected}")
     assert CodedLocation(lat, lon, 0.5).code == expected
 

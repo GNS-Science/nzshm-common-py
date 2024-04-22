@@ -23,11 +23,23 @@ def test_multiple_sources():
     merged_locations = set(LOCATION_LISTS["NZ"]["locations"] + LOCATION_LISTS["SRWG214"]["locations"])
     assert len(location_list) == len(merged_locations), "List length equalling merge of two lists"
 
-    # Ensure nothing weird happens if we include a list twice
-    location_list = get_location_list(["NZ", "NZ"], sort_locations=False)
-    assert len(location_list) == len(
-        LOCATION_LISTS["NZ"]["locations"]
-    ), "Should match count for single NZ location list"
+
+def test_source_overlaps():
+    """
+    Ensure that locations that appear in multiple lists are not duplicated.
+    """
+    nznz_list = get_location_list(["NZ", "NZ"])
+    assert len(nznz_list) == len(LOCATION_LISTS["NZ"]["locations"]), "Should match count for single NZ location list"
+
+    masterton = get_locations(["MRO"])[0]
+    # Turning off sort_locations to make the test marginally faster for larger collections.
+    nz_list = get_location_list(["NZ"], sort_locations=False)
+    all_list = get_location_list(["ALL"], sort_locations=False)
+    nz_all_list = get_location_list(["NZ", "ALL"], sort_locations=False)
+
+    assert nz_list.count(masterton) == 1, "Should find Masterton in New Zealand once"
+    assert all_list.count(masterton) == 1, "Should find Masterton in All once"
+    assert nz_all_list.count(masterton) == 1, "Should find Masterton in combined list once"
 
 
 def test_missing_source():
