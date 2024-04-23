@@ -84,17 +84,17 @@ def test_coded_location_from_tuple():
 @pytest.mark.parametrize(
     "lat,lon,is_before,is_code_before,description",
     [
-        (-45.1, +171.3, 0, 1, "0.1 North 0.1 West"),
-        (-45.1, +171.4, 0, 1, "0.1 North"),
-        (-45.1, +171.5, 0, 1, "0.1 North 0.1 East"),
+        (-45.1, +171.3, 1, 1, "0.1 North 0.1 West"),
+        (-45.1, +171.4, 1, 1, "0.1 North"),
+        (-45.1, +171.5, 1, 1, "0.1 North 0.1 East"),
         (-45.2, +171.3, 1, 1, "0.1 West"),
-        (-45.2, +171.4, 0, 0, "Reference"),
+        (-45.2, +171.4, 0, 0, "Reference (in Southern/Eastern Hemispheres)"),
         (-45.2, +171.5, 0, 0, "0.1 East"),
-        (-45.3, +171.3, 1, 0, "0.1 South 0.1 West"),
-        (-45.3, +171.4, 1, 0, "0.1 South"),
-        (-45.3, +171.5, 1, 0, "0.1 South 0.1 East"),
-        (+45.2, -171.4, 0, 0, "Northern / Western Hemispheres"),
-        (+45.2, +171.4, 0, 0, "Northern / Eastern Hemispheres"),
+        (-45.3, +171.3, 0, 0, "0.1 South 0.1 West"),
+        (-45.3, +171.4, 0, 0, "0.1 South"),
+        (-45.3, +171.5, 0, 0, "0.1 South 0.1 East"),
+        (+45.2, -171.4, 1, 0, "Northern / Western Hemispheres (code sort inverts lat)"),
+        (+45.2, +171.4, 1, 0, "Northern / Eastern Hemispheres (code sort inverts lat)"),
         (-45.2, -171.4, 1, 1, "Southern / Western Hemispheres"),
     ],
 )
@@ -103,11 +103,13 @@ def test_coded_location_ordering(lat, lon, is_before, is_code_before, descriptio
     Characterising differences in sorting arithmetically by latitude then
     longitude, versus alphanumeric .code sorting.
 
-    For arithmetic comparisons we expect:
-    - South before North, or
-    - West before East when on the same latitude
+    Alpha sorting works for New Zealand because we have a negative latitude,
+    but would sort in the opposite direction for the northern hemisphere.
 
-    For code comparisons, alphanumeric sorting puts "-45.1" ahead of "-45.2".
+    For arithmetic comparisons we expect:
+
+    - North before Sorth, or
+    - West before East when on the same latitude
     """
     reference_point = CodedLocation(-45.24, 171.4, 0.1)
     is_before = bool(is_before)

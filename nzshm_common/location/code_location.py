@@ -45,7 +45,7 @@ class CodedLocation:
 
         For arithmetic comparisons we expect:
 
-        * south comes before north
+        * north comes before south
         * when on the same latitude, west comes before east
 
         Note:
@@ -71,9 +71,9 @@ class CodedLocation:
         """
         lat_delta = self.lat - other.lat
         lon_delta = self.lon - other.lon
-        if lat_delta < 0:
+        if lat_delta > 0:
             return True
-        elif lat_delta > 0:
+        elif lat_delta < 0:
             return False
         elif lon_delta < 0:
             return True
