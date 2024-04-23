@@ -158,7 +158,7 @@ def get_location_list(
     Get all coded locations within one or more lists.
 
     The sorting method used for CodedLocation values is described in
-    [`CodedLocation.__lt__`](../code_location.CodedLocation/#nzshm_common.location.code_location.CodedLocation.__lt__)
+    [`CodedLocation.__lt__`](code_location.CodedLocation.md#nzshm_common.location.code_location.CodedLocation.__lt__)
 
     Parameters:
         location_list_names: a list of valid LOCATION_LIST keys

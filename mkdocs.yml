@@ -17,6 +17,7 @@ nav:
       - region_grid (module): api/grids/region_grid.md
     - location (package):
       - CodedLocation (class): api/location/code_location.CodedLocation.md
+      - CodedLocationBin (class): api/location/code_location.CodedLocationBin.md
       - location (module): api/location/location.md
       - types (module): api/location/types.md
   - Contributing: contributing.md

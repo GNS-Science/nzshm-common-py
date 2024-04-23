@@ -1,5 +1,7 @@
 import decimal
+from collections import OrderedDict
 from dataclasses import dataclass, field
+from typing import Iterable, List, Optional
 
 from nzshm_common.constants import DEFAULT_RESOLUTION
 from nzshm_common.location.types import LatLon
@@ -153,3 +155,100 @@ class CodedLocation:
         Create a downsampled CodedLocation with a coarser resolution.
         """
         return CodedLocation(lat=self.lat, lon=self.lon, resolution=resolution)
+
+
+class CodedLocationBin:
+    """
+    A collection of CodedLocation values, gathered into bins at a coarser resolution.
+    """
+
+    reference_point: CodedLocation
+    locations: List[CodedLocation]
+    bin_resolution: float
+    _code: str
+
+    def __init__(
+        self, reference_point: CodedLocation, bin_resolution: float, locations: Optional[Iterable[CodedLocation]] = None
+    ):
+        """
+        Create a CodedLocationBin instance.
+
+        Arguments:
+            reference_point: the downsampled coordinate use as a reference point for the collection.
+            bin_resolution: the coarser-level resolution of the bin
+            locations: a collection of CodedLocation values
+        """
+        self.reference_point = reference_point
+        self.bin_resolution = bin_resolution
+
+        if locations is not None:
+            self.locations: List[CodedLocation] = list(locations)
+        else:
+            self.locations: List[CodedLocation] = list()
+
+    def __iter__(self):
+        """Iterate over the location collection."""
+        return self.locations.__iter__()
+
+    def __len__(self):
+        """Count the number of locations in the bin."""
+        return len(self.locations)
+
+    def __repr__(self):
+        plural = "" if len(self.locations) == 1 else "s"
+        count = len(self)
+        code = self.reference_point.code
+        resolution = self.bin_resolution
+
+        return f"CodedLocationBin({count} location{plural} near {code} below resolution {resolution})"
+
+    @property
+    def code(self) -> str:
+        """
+        The string code for the reference point, expressed as latitude~longitude.
+
+        This can be used as a unique key when collecting a dictionary of bins.
+        """
+        return self.reference_point.code
+
+
+def bin_locations(
+    locations: Iterable[CodedLocation], at_resolution: float, sort_bins: bool = True
+) -> OrderedDict[str, CodedLocationBin]:
+    """
+    Collect CodedLocations into a dictionary of bins with coarser resolution.
+
+    Bin selection is based on the `CodedLocation.downsample` method, reducing
+    coordinate precision.
+
+    Bins are keyed on the `CodedLocation.code` property.
+
+    TODO: emit a warning if at_resolution is lower than incoming resolutions?
+
+    Examples:
+        >>> from nzshm_common import grids, location
+        >>> grid_locs = grids.get_location_grid('NZ_0_1_NB_1_1', resolution=0.1)
+        >>> grid_bins = bin_locations(grid_locs, at_resolution=0.5)
+        >>> for location_bin in grid_bins:
+        ...     for coded_loc in bin:
+        ...         # Do a thing
+    """
+    bin_dict: OrderedDict[str, CodedLocationBin] = OrderedDict()
+
+    for location in locations:
+        coded_loc = location.downsample(at_resolution)
+        bin_code = coded_loc._code
+        if bin_code not in bin_dict:
+            bin_dict[bin_code] = CodedLocationBin(coded_loc, at_resolution, [])
+
+        bin_dict[bin_code].locations.append(location)
+
+    if sort_bins:
+        # Sort the bins themselves.
+        bin_dict = OrderedDict(sorted(bin_dict.items(), key=lambda item: item[1].reference_point))
+
+        # Sort CodedLocations within each bin.
+        for location_bin in bin_dict.values():
+            location_bin.locations.sort()
+
+    return bin_dict
