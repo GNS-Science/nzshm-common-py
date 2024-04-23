@@ -1,5 +1,5 @@
 from nzshm_common import location
-from nzshm_common.location.code_location import CodedLocation
+from nzshm_common.location.coded_location import CodedLocation
 
 
 def test_location_keys_unique():

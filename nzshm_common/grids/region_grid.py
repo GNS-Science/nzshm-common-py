@@ -9,7 +9,7 @@ from nzshm_common.grids.nz_0_1_nb_1_v1 import NZ01nb1v1
 from nzshm_common.grids.nz_0_2_nb_1_1 import NZ_0_2_nb_1_1
 from nzshm_common.grids.wlg_0_01_nb_1_1 import WLG_0_01_nb_1_1
 from nzshm_common.grids.wlg_0_05_nb_1_1 import WLG_0_05_nb_1_1
-from nzshm_common.location.code_location import CodedLocation
+from nzshm_common.location.coded_location import CodedLocation
 from nzshm_common.location.types import LatLon
 
 RegionGridEntry = namedtuple("RegionGridEntry", "region_name resolution neighbours grid version")
