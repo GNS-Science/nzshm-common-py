@@ -67,7 +67,7 @@ def test_coded_location_equality(lat, lon, expected):
     assert c0 == c1
 
 
-def test_coded_location_helper():
+def test_coded_location_from_tuple():
     coded_loc = CodedLocation.from_tuple(LatLon(latitude=-45.27, longitude=171.14))
     assert isinstance(coded_loc, CodedLocation), "Return type should be CodedLocation"
     assert coded_loc.resolution == DEFAULT_RESOLUTION, "Should have default resolution"
@@ -79,6 +79,43 @@ def test_coded_location_helper():
     assert coded_loc_lores.resolution == 0.1, "Should have lowered resolution"
     assert coded_loc_lores.lat == -45.3, "Should have rounded latitude"
     assert coded_loc_lores.lon == 171.1, "Should have rounded longitude"
+
+
+@pytest.mark.parametrize(
+    "lat,lon,is_before,is_code_before,description",
+    [
+        (-45.1, +171.3, 0, 1, "0.1 North 0.1 West"),
+        (-45.1, +171.4, 0, 1, "0.1 North"),
+        (-45.1, +171.5, 0, 1, "0.1 North 0.1 East"),
+        (-45.2, +171.3, 1, 1, "0.1 West"),
+        (-45.2, +171.4, 0, 0, "Reference"),
+        (-45.2, +171.5, 0, 0, "0.1 East"),
+        (-45.3, +171.3, 1, 0, "0.1 South 0.1 West"),
+        (-45.3, +171.4, 1, 0, "0.1 South"),
+        (-45.3, +171.5, 1, 0, "0.1 South 0.1 East"),
+        (+45.2, -171.4, 0, 0, "Northern / Western Hemispheres"),
+        (+45.2, +171.4, 0, 0, "Northern / Eastern Hemispheres"),
+        (-45.2, -171.4, 1, 1, "Southern / Western Hemispheres"),
+    ],
+)
+def test_coded_location_ordering(lat, lon, is_before, is_code_before, description):
+    """
+    Characterising differences in sorting arithmetically by latitude then
+    longitude, versus alphanumeric .code sorting.
+
+    For arithmetic comparisons we expect:
+    - South before North, or
+    - West before East when on the same latitude
+
+    For code comparisons, alphanumeric sorting puts "-45.1" ahead of "-45.2".
+    """
+    reference_point = CodedLocation(-45.24, 171.4, 0.1)
+    is_before = bool(is_before)
+    is_code_before = bool(is_code_before)
+
+    target = CodedLocation(lat, lon, 0.1)
+    assert (target < reference_point) == is_before, f"Comparison expected: {is_before}"
+    assert (target.code < reference_point.code) == is_code_before, f"Code comparison expected: {is_code_before}"
 
 
 @pytest.mark.parametrize("lat,lon,expected", oh_point_five_expected)

@@ -43,6 +43,11 @@ class CodedLocation:
         """
         Less-than comparator to enable sorting for CodedLocations.
 
+        For arithmetic comparisons we expect:
+
+        * south comes before north
+        * when on the same latitude, west comes before east
+
         Note:
             Coded locations at different resolutions are not considered
             equal. Use `.as_tuple` to check for numerical equivalency.
@@ -64,7 +69,16 @@ class CodedLocation:
             True
 
         """
-        return (self.lat < other.lat) or (self.lon < other.lon)
+        lat_delta = self.lat - other.lat
+        lon_delta = self.lon - other.lon
+        if lat_delta < 0:
+            return True
+        elif lat_delta > 0:
+            return False
+        elif lon_delta < 0:
+            return True
+        else:
+            return False
 
     @property
     def as_tuple(self) -> LatLon:
@@ -129,9 +143,13 @@ class CodedLocation:
         return CodedLocation(lat=location[0], lon=location[1], resolution=resolution)
 
     def resample(self, resolution: float) -> "CodedLocation":
-        """Downsample/Resample."""
+        """
+        Create a resampled CodedLocation with a finer resolution.
+        """
         return self.downsample(resolution)
 
     def downsample(self, resolution: float) -> "CodedLocation":
-        """Downsample/Resample."""
+        """
+        Create a downsampled CodedLocation with a coarser resolution.
+        """
         return CodedLocation(lat=self.lat, lon=self.lon, resolution=resolution)
