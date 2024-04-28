@@ -1,11 +1,11 @@
-import string
+import os
 import random
+import string
 import tempfile
 import zipfile
-import os
-
 from pathlib import Path
-from nzshm_common.util import compress_string, decompress_string, compress_path
+
+from nzshm_common.util import compress_path, compress_string, decompress_string
 
 
 def test_string_compression_round_trip():

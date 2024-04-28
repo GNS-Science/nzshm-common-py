@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.0-alpha] - 2024-03-29
+### Added
+ - new LatLon type definition for a (latitude, longitude) named tuple
+ - nzshm_common.constants.DEFAULT_RESOLUTION (0.001 degree)
+ - sorting for CodedLocation objects (N->S then W->E)
+ - get_location_grid and get_location_grid_names functions for grids
+ - get_location_list and get_location_list_names functions for location lists
+
+### Changed
+ - CodedLocation (and new LatLon) can be imported directly from nzshm_common
+ - several function signatures now use LatLon instead of Tuple[float, float]
+      - non-breaking change; they are functionally equivalent in runtime
+
+
 ## [0.7.0] - 2024-03-19
 ### Added
  - get_locations function
