@@ -3,6 +3,7 @@ import unittest
 try:
     import shapely  # noqa
     from shapely.geometry import Point
+
     from nzshm_common.geometry.geometry import backarc_polygon
 
     HAVE_SHAPELY = True

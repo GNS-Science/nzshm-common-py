@@ -12,9 +12,13 @@ nav:
   - Installation: installation.md
   - Usage: usage.md
   - API Reference:
+    - constants: api/constants.md
+    - grids (package):
+      - region_grid (module): api/grids/region_grid.md
     - location (package):
-      - location (module): api/location/location.md
       - CodedLocation (class): api/location/code_location.CodedLocation.md
+      - location (module): api/location/location.md
+      - types (module): api/location/types.md
   - Contributing: contributing.md
   - Changelog: changelog.md
 theme:

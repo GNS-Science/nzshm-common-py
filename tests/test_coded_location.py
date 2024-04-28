@@ -1,10 +1,12 @@
-from contextlib import contextmanager
-import pytest
+import random
 import unittest
 
-from nzshm_common.location import CodedLocation
+import pytest
+
+from nzshm_common import CodedLocation, LatLon
+from nzshm_common.constants import DEFAULT_RESOLUTION
 from nzshm_common.grids.region_grid import load_grid
-import random
+from tests.helpers import does_not_raise
 
 GRID_02 = load_grid('NZ_0_2_NB_1_1')
 LOCS = [CodedLocation(loc[0], loc[1], 0.001) for loc in GRID_02[20:50]]  # type: ignore
@@ -48,6 +50,16 @@ oh_point_five_expected = [
 ]
 
 
+def test_as_tuple():
+    c = CodedLocation(-45.2, 175.2, 0.1)
+
+    assert isinstance(c.as_tuple, LatLon)
+    assert c.as_tuple.latitude == -45.2
+    assert c.as_tuple.longitude == 175.2
+    assert c.as_tuple[0] == -45.2
+    assert c.as_tuple[1] == 175.2
+
+
 @pytest.mark.parametrize("lat,lon,expected", oh_point_five_expected)
 def test_coded_location_equality(lat, lon, expected):
     c0 = CodedLocation(lat, lon, 0.5)
@@ -55,8 +67,61 @@ def test_coded_location_equality(lat, lon, expected):
     assert c0 == c1
 
 
+def test_coded_location_from_tuple():
+    coded_loc = CodedLocation.from_tuple(LatLon(latitude=-45.27, longitude=171.14))
+    assert isinstance(coded_loc, CodedLocation), "Return type should be CodedLocation"
+    assert coded_loc.resolution == DEFAULT_RESOLUTION, "Should have default resolution"
+    assert coded_loc.lat == -45.27, "Latitude should match"
+    assert coded_loc.lon == 171.14, "Longitude should match"
+
+    # A naked (latitude, longitude) tuple with the same values should work also.
+    coded_loc_lores = CodedLocation.from_tuple((-45.27, 171.14), resolution=0.1)
+    assert coded_loc_lores.resolution == 0.1, "Should have lowered resolution"
+    assert coded_loc_lores.lat == -45.3, "Should have rounded latitude"
+    assert coded_loc_lores.lon == 171.1, "Should have rounded longitude"
+
+
+@pytest.mark.parametrize(
+    "lat,lon,is_before,is_code_before,description",
+    [
+        (-45.1, +171.3, 1, 1, "0.1 North 0.1 West"),
+        (-45.1, +171.4, 1, 1, "0.1 North"),
+        (-45.1, +171.5, 1, 1, "0.1 North 0.1 East"),
+        (-45.2, +171.3, 1, 1, "0.1 West"),
+        (-45.2, +171.4, 0, 0, "Reference (in Southern/Eastern Hemispheres)"),
+        (-45.2, +171.5, 0, 0, "0.1 East"),
+        (-45.3, +171.3, 0, 0, "0.1 South 0.1 West"),
+        (-45.3, +171.4, 0, 0, "0.1 South"),
+        (-45.3, +171.5, 0, 0, "0.1 South 0.1 East"),
+        (+45.2, -171.4, 1, 0, "Northern / Western Hemispheres (code sort inverts lat)"),
+        (+45.2, +171.4, 1, 0, "Northern / Eastern Hemispheres (code sort inverts lat)"),
+        (-45.2, -171.4, 1, 1, "Southern / Western Hemispheres"),
+    ],
+)
+def test_coded_location_ordering(lat, lon, is_before, is_code_before, description):
+    """
+    Characterising differences in sorting arithmetically by latitude then
+    longitude, versus alphanumeric .code sorting.
+
+    Alpha sorting works for New Zealand because we have a negative latitude,
+    but would sort in the opposite direction for the northern hemisphere.
+
+    For arithmetic comparisons we expect:
+
+    - North before Sorth, or
+    - West before East when on the same latitude
+    """
+    reference_point = CodedLocation(-45.24, 171.4, 0.1)
+    is_before = bool(is_before)
+    is_code_before = bool(is_code_before)
+
+    target = CodedLocation(lat, lon, 0.1)
+    assert (target < reference_point) == is_before, f"Comparison expected: {is_before}"
+    assert (target.code < reference_point.code) == is_code_before, f"Code comparison expected: {is_code_before}"
+
+
 @pytest.mark.parametrize("lat,lon,expected", oh_point_five_expected)
-def test_downsample_default_oh_point_five_no_downsampking_required(lat, lon, expected):
+def test_downsample_default_oh_point_five_no_downsampling_required(lat, lon, expected):
     print(f"lat {lat} lon {lon} -> {expected}")
     assert CodedLocation(lat, lon, 0.5).code == expected
 
@@ -111,11 +176,6 @@ def test_downsample_oh_point_one(lat, lon, expected):
 def test_downsample_oh_point_oh_five(lat, lon, expected):
     c = CodedLocation(lat, lon, 0.05)
     assert c.downsample(0.05).code == expected
-
-
-@contextmanager
-def does_not_raise():
-    yield
 
 
 @pytest.mark.parametrize(
