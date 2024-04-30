@@ -1,10 +1,18 @@
 from collections import OrderedDict
+from pathlib import Path
 
-from nzshm_common import grids
+import pytest
+
 from nzshm_common.location.code_location import CodedLocationBin, bin_locations
+from nzshm_common.location.location import get_locations
 
-GRID_LOCS = grids.get_location_grid("NZ_0_1_NB_1_0", resolution=0.1)
-GRID_LOCS_EXPECTED_BIN_COUNT_05 = 196
+# Fixture is a subset of the NZ_0_1_NB_1_0 dataset to improve execution time.
+# This set includes the first and last bin at 0.5 degrees, and another 18
+# randomly sampled bins in between.
+GRID_LOCS_FILEPATH = str(Path(__file__).parent / 'fixtures' / 'grid_loc_subset.csv')
+
+GRID_LOCS = get_locations([GRID_LOCS_FILEPATH])
+GRID_LOCS_EXPECTED_BIN_COUNT_05 = 20
 
 
 def test_coded_location_bin_empty():
@@ -58,5 +66,32 @@ def test_coded_location_binning_sort():
     assert min_bin.locations == sorted([loc for loc in min_bin])
 
     print()
-    print("NW-most bin:", min_bin)
-    print("SE-most bin:", max_bin)
+    print("Northmost bin:", min_bin)
+    print("Southmost bin:", max_bin)
+
+
+def test_coded_location_binning_wrong_resolution():
+    """
+    If binning encounters coded locations at a coarser resolution than the
+    bins, warn the user.
+    """
+    locs = ["-34.5~172.5", "-47.5~167.5"]
+    coded_locs = get_locations(locs, resolution=0.5)
+
+    expected_message = (
+        "Found locations up to 0.5 degree resolution. Binning expected to downsample to a 0.01 degree resolution."
+    )
+
+    with pytest.warns(UserWarning) as warnings:
+        bins = bin_locations(coded_locs, at_resolution=0.01)
+
+    assert len(bins) == len(locs), "Should be one bin per location"
+    assert "-34.50~172.50" in bins, "Should find first location resampled"
+    assert "-47.50~167.50" in bins, "Should find first location resampled"
+
+    assert len(warnings) == 1, "Should only be warned once"
+    assert str(warnings[0].message) == expected_message, "Should have matched expected message"
+    assert warnings[0].filename == __file__, "Should have been attributed to this caller"
+
+    print()
+    print(warnings[0].message)
