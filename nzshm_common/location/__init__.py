@@ -1,1 +1,1 @@
-from .code_location import CodedLocation
+from .coded_location import CodedLocation, CodedLocationBin

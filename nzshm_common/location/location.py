@@ -20,7 +20,7 @@ from typing import Any, Dict, Iterable, List, Optional
 
 from nzshm_common.constants import DEFAULT_RESOLUTION
 from nzshm_common.grids.region_grid import load_grid
-from nzshm_common.location.code_location import CodedLocation
+from nzshm_common.location.coded_location import CodedLocation
 from nzshm_common.location.types import LatLon
 
 # Omitting country for now, focus on NZ
@@ -158,7 +158,7 @@ def get_location_list(
     Get all coded locations within one or more lists.
 
     The sorting method used for CodedLocation values is described in
-    [`CodedLocation.__lt__`](code_location.md#nzshm_common.location.code_location.CodedLocation.__lt__)
+    [`CodedLocation.__lt__`](coded_location.md#nzshm_common.location.coded_location.CodedLocation.__lt__)
 
     Parameters:
         location_list_names: a list of valid LOCATION_LIST keys

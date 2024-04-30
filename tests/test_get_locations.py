@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from nzshm_common.location.code_location import CodedLocation
+from nzshm_common.location.coded_location import CodedLocation
 from nzshm_common.location.location import LOCATION_LISTS, get_locations
 
 LOCATIONS_FILEPATH = Path(__file__).parent / 'fixtures' / 'location_file.csv'

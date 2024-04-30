@@ -6,5 +6,5 @@ DEFAULT_RESOLUTION = 0.001
 """
 Default coordinate resolution in degrees.
 This is typically used for
-[`CodedLocation`](location/code_location.md#nzshm_common.location.code_location.CodedLocation) values.
+[`CodedLocation`](location/coded_location.md#nzshm_common.location.coded_location.CodedLocation) values.
 """

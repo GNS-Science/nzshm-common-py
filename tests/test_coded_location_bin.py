@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from nzshm_common.location.code_location import CodedLocationBin, bin_locations
+from nzshm_common.location.coded_location import CodedLocationBin, bin_locations
 from nzshm_common.location.location import get_locations
 
 # Fixture is a subset of the NZ_0_1_NB_1_0 dataset to improve execution time.

@@ -5,5 +5,5 @@ __version__ = '0.7.0'
 from .location import location
 
 # Common classes at the top level for convenience
-from .location.code_location import CodedLocation, CodedLocationBin
+from .location.coded_location import CodedLocation, CodedLocationBin
 from .location.types import LatLon
