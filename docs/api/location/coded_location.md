@@ -1,4 +1,4 @@
-::: nzshm_common.location.code_location
+::: nzshm_common.location.coded_location
     options:
         filters: ["!^_"]
         docstring_options:

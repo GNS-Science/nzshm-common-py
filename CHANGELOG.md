@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.0-alpha.1] - 2024-05-08
+### Added
+ - CodedLocationBin class
+ - bin_locations for collecting coded locations at a coarser resolution
+ - Illustration of bin_locations applied to a grid dataset
+ - More documentation and examples
+ - Fixture for sampling on a reduced set of NZ_0_1_NB_1_0
+
+### Changed
+ - location/code_location.py is renamed to coded_location for consistency
+
+
 ## [0.8.0-alpha] - 2024-03-29
 ### Added
  - new LatLon type definition for a (latitude, longitude) named tuple
