@@ -1,7 +1,8 @@
 from typing import Iterable
 
-from nzshm_common.constants import DEFAULT_RESOLUTION
-from nzshm_common.grids import get_location_grid, get_location_grid_names, load_grid
+import pytest
+
+from nzshm_common.grids import RegionGrid, get_location_grid, get_location_grid_names, load_grid
 from nzshm_common.location import CodedLocation
 
 
@@ -51,7 +52,7 @@ def test_get_location_grid_default():
 
     assert isinstance(grid_list, Iterable), "Should be Iterable"
     assert isinstance(grid_list[0], CodedLocation), "Should contain CodedLocation values"
-    assert grid_list[0].resolution == DEFAULT_RESOLUTION, "Should have default resolution"
+    assert grid_list[0].resolution == RegionGrid.WLG_0_05_nb_1_1.resolution, "Should have grid default resolution"
 
     assert len(grid_list) == len(baseline_grid), "Should have a CodedLocation for each grid coordinate"
     assert grid_list[0].as_tuple == baseline_grid[0], "Preserving grid ordering"
@@ -64,7 +65,11 @@ def test_get_location_grid_downsampling():
     # Load at default resolution for comparison
     grid_list = get_location_grid("WLG_0_05_nb_1_1")
 
-    grid_downsampled = get_location_grid("WLG_0_05_nb_1_1", resolution=0.1)
+    expected_message = "The requested resolution is lower than the grid resolution and will result in fewer points."
+
+    with pytest.warns(UserWarning) as warnings:
+        grid_downsampled = get_location_grid("WLG_0_05_nb_1_1", resolution=0.1)
+
     assert isinstance(grid_downsampled, Iterable), "Should be Iterable"
     assert isinstance(grid_downsampled[0], CodedLocation), "Should contain CodedLocation values"
     assert len(grid_list) > len(grid_downsampled), "Should have fewer downsampled coordinates"
@@ -84,6 +89,10 @@ def test_get_location_grid_downsampling():
     assert (
         grid_downsampled[0].as_tuple == resample.as_tuple
     ), "CodedLocations at different resolutions can be compared as LatLon values"
+
+    assert len(warnings) == 1, "Should only be warned about downsampling"
+    assert str(warnings[0].message) == expected_message, "Should have matched expected message"
+    assert warnings[0].filename == __file__, "Should have been attributed to this caller"
 
 
 def test_get_location_grid_names():

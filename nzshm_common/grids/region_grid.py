@@ -1,9 +1,9 @@
+import warnings
 from collections import namedtuple
 from enum import Enum
 from functools import partial
-from typing import Iterable, List
+from typing import Iterable, List, Optional
 
-from nzshm_common.constants import DEFAULT_RESOLUTION
 from nzshm_common.grids.nz_0_1_nb_1_v0 import NZ01nb1v0
 from nzshm_common.grids.nz_0_1_nb_1_v1 import NZ01nb1v1
 from nzshm_common.grids.nz_0_2_nb_1_1 import NZ_0_2_nb_1_1
@@ -66,7 +66,7 @@ def load_grid(grid_name: str) -> List[LatLon]:
     return RegionGrid[grid_name].load()
 
 
-def get_location_grid(location_grid_name: str, resolution: float = DEFAULT_RESOLUTION) -> Iterable[CodedLocation]:
+def get_location_grid(location_grid_name: str, resolution: Optional[float] = None) -> Iterable[CodedLocation]:
     """
     Get all coded locations within a grid.
 
@@ -74,21 +74,28 @@ def get_location_grid(location_grid_name: str, resolution: float = DEFAULT_RESOL
         When downsampling to a lower resolution, duplicate location values will be removed.
 
     Parameters:
-        location_grid_name: a valid member key from RegionGrid (e.g. "NZ_0_1_NB_1_1")
-        resolution: the resolution of the CodedLocation values generated
+        location_grid_name: A valid member key from RegionGrid (e.g. "NZ_0_1_NB_1_1")
+        resolution: The resolution of the CodedLocation values generated.
+            Defaults to the native RegionGrid resolution value.
 
     Returns:
-        a list of coded locations
+        A list of coded locations with the specified resolution.
 
     Examples:
         >>> from nzshm_common import grids
         >>> grids.get_location_grid("NZ_0_1_NB_1_0")
         [
-            CodedLocation(lat=-46.1, lon=166.4, resolution=0.001),
-            CodedLocation(lat=-46.0, lon=166.4, resolution=0.001)
+            CodedLocation(lat=-46.1, lon=166.4, resolution=0.1),
+            CodedLocation(lat=-46.0, lon=166.4, resolution=0.1)
             ...
         ]
     """
+    if not resolution:
+        resolution = RegionGrid[location_grid_name].resolution
+    elif resolution > RegionGrid[location_grid_name].resolution:
+        warn_msg = "The requested resolution is lower than the grid resolution and will result in fewer points."
+        warnings.warn(warn_msg, stacklevel=2)
+
     grid_values = load_grid(location_grid_name)
     coded_at_resolution = partial(CodedLocation.from_tuple, resolution=resolution)
     # Remove duplicate coordinates from collection, preserving order.
