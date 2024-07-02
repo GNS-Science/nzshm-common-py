@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [0.8.0] - 2024-07-03
+
+official 0.8.0 release
+
 ## [0.8.0-alpha.1] - 2024-05-08
 ### Added
  - CodedLocationBin class
@@ -15,7 +20,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
  - location/code_location.py is renamed to coded_location for consistency
-
 
 ## [0.8.0-alpha] - 2024-03-29
 ### Added
@@ -29,7 +33,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - CodedLocation (and new LatLon) can be imported directly from nzshm_common
  - several function signatures now use LatLon instead of Tuple[float, float]
       - non-breaking change; they are functionally equivalent in runtime
-
 
 ## [0.7.0] - 2024-03-19
 ### Added
