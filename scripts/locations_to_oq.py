@@ -1,13 +1,12 @@
 import argparse
 import csv
-
 from enum import Enum
 from pathlib import Path
 
 from shapely.geometry import Point
 
-from nzshm_common.location.location import LOCATIONS_BY_ID, LOCATIONS_SRWG214_BY_ID
 from nzshm_common.geometry.geometry import create_backarc_polygon
+from nzshm_common.location.location import LOCATIONS_BY_ID, LOCATIONS_SRWG214_BY_ID
 
 
 class SiteLists(Enum):

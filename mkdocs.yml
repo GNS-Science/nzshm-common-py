@@ -10,11 +10,15 @@ watch:
 nav:
   - Home: index.md
   - Installation: installation.md
-  - Usage: usage.md
+  # - Usage: usage.md
   - API Reference:
+    - constants: api/constants.md
+    - grids (package):
+      - region_grid (module): api/grids/region_grid.md
     - location (package):
+      - coded_location (module): api/location/coded_location.md
       - location (module): api/location/location.md
-      - CodedLocation (class): api/location/code_location.CodedLocation.md
+      - types (module): api/location/types.md
   - Contributing: contributing.md
   - Changelog: changelog.md
 theme:
