@@ -1,9 +1,13 @@
 """Simple polygon builder methods."""
 
 import math
+from typing import TYPE_CHECKING, Iterable, List
 
 import shapely.wkt
-from shapely.geometry import Polygon
+from shapely.geometry import Point, Polygon
+
+if TYPE_CHECKING:
+    from nzshm_common import CodedLocation
 
 
 def create_hexagon(edge: float, x: float, y: float):
@@ -52,3 +56,20 @@ def backarc_polygon() -> Polygon:
     """
 
     return shapely.wkt.loads(BA_POLYGON_WKT)
+
+
+def within_polygon(locations: Iterable['CodedLocation'], polygon: Polygon) -> List[bool]:
+    """
+    Check if points are within a given polygon.
+    Uses shapley.geometry.Polygon.contains() which will be false for points on the polygon boundary.
+
+    Args:
+        locations: the points to check
+        polygon: the polygon
+
+    Returns:
+        A list of boolian values True if the point is within the polygon and False if not
+    """
+
+    points = [Point(loc.lon, loc.lat) for loc in locations]
+    return [polygon.contains(point) for point in points]
