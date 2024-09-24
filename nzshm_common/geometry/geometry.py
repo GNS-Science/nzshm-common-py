@@ -58,6 +58,9 @@ def backarc_polygon() -> Polygon:
     return shapely.wkt.loads(BA_POLYGON_WKT)
 
 
+# TODO: consider if this function and any of the geometry operation functions belong in thier own repo. This
+# would remove dependencies from what is supposed to be a pure python library and allow us to consolodate
+# all geometry operations into one lib (including those in solvis and eq-fault-geom)
 def within_polygon(locations: Iterable['CodedLocation'], polygon: Polygon) -> List[bool]:
     """
     Check if points are within a given polygon.
