@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Iterable, List
 import shapely.wkt
 from shapely.geometry import Point, Polygon
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from nzshm_common import CodedLocation
 
 
