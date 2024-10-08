@@ -1,6 +1,6 @@
 __author__ = "GNS Science"
 __email__ = 'nshm@gns.cri.nz'
-__version__ = '0.8.2'
+__version__ = '0.8.3'
 
 from .location import location
 
