@@ -63,7 +63,7 @@ LOCATION_LISTS = {
 }
 
 
-def _lat_lon(_id) -> Optional[LatLon]:
+def lat_lon_by_id(_id) -> Optional[LatLon]:
     loc = location_by_id(_id)
     if loc:
         return LatLon(loc['latitude'], loc['longitude'])
@@ -83,7 +83,7 @@ def _load_csv(locations_filepath, resolution):
 
 def location_by_id(location_code: str) -> Optional[Dict[str, Any]]:
     """
-    Get the CodedLocation for a location identified by an id.
+    Get the information for a location identified by an id.
 
     Parameters:
         location_code: the code (e.g. "WLG") for the location
@@ -125,10 +125,10 @@ def get_locations(locations: Iterable[str], resolution: float = DEFAULT_RESOLUTI
             lat, lon = location_id.split('~')
             coded_locations.append(CodedLocation(float(lat), float(lon), resolution))
         elif location_by_id(location_id):
-            coded_locations.append(CodedLocation(*_lat_lon(location_id), resolution))  # type: ignore
+            coded_locations.append(CodedLocation(*lat_lon_by_id(location_id), resolution))  # type: ignore
         elif LOCATION_LISTS.get(location_id):
             location_ids = LOCATION_LISTS[location_id]["locations"]
-            coded_locations += [CodedLocation(*_lat_lon(_id), resolution) for _id in location_ids]  # type: ignore
+            coded_locations += [CodedLocation(*lat_lon_by_id(_id), resolution) for _id in location_ids]  # type: ignore
         else:
             try:
                 coded_locations += [CodedLocation(*loc, resolution) for loc in load_grid(location_id)]  # type: ignore
