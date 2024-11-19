@@ -1,8 +1,7 @@
 import pytest
 
-from nzshm_common import location
 from nzshm_common.location.coded_location import CodedLocation
-from nzshm_common.location.location import get_name_with_macrons
+import nzshm_common.location.location as location
 
 
 def test_location_keys_unique():
@@ -72,4 +71,4 @@ def test_missing_lat_lon_returns_None():
     ],
 )
 def test_macron_mapping(name_in, name_out):
-    assert get_name_with_macrons(name_in) == name_out
+    assert location.get_name_with_macrons(name_in) == name_out
