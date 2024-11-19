@@ -4,6 +4,7 @@ This module contains constants and functions for referring to location or list o
 
 import csv
 import json
+import importlib.resources as resources
 from collections import namedtuple
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional
@@ -16,13 +17,17 @@ from nzshm_common.location.types import LatLon
 # Omitting country for now, focus on NZ
 # https://service.unece.org/trade/locode/nz.htm
 
-locations_filepath = Path(Path(__file__).parent, 'locations.json')
-with open(locations_filepath, 'r') as locations_file:
-    LOCATIONS = json.load(locations_file)
+resource_dir = resources.files('nzshm_common.location.resources')
 
-nz_ids_filepath = Path(Path(__file__).parent, 'nz_ids.json')
-with open(nz_ids_filepath, 'r') as nz_ids_file:
-    NZ_IDS = json.load(nz_ids_file)
+locations_resource = resource_dir  / 'locations.json'
+with resources.as_file(locations_resource) as path:
+    with path.open() as file:
+        LOCATIONS = json.load(file)
+
+nz_ids_resource = resource_dir / 'nz_ids.json'
+with resources.as_file(nz_ids_resource) as path:
+    with path.open() as file:
+        NZ_IDS = json.load(file)
 
 LOCATIONS_BY_ID: Dict[str, Any] = {location["id"]: location for location in LOCATIONS}
 
