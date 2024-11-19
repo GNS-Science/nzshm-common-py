@@ -8,7 +8,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.8.3] - 2024-10-09
 
 ### Changed
- - name of function in `nzshm_common.location` from `_lat_lon` to `lat_lon_by_id`
  - import `location.location` functions into base package init for ease of use
 
 ### Fixed
