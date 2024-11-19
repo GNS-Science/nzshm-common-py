@@ -1,4 +1,4 @@
-from nzshm_common import location
+from nzshm_common.location import location
 from nzshm_common.location.coded_location import CodedLocation
 
 

@@ -1,15 +1,5 @@
 """
 This module contains constants and functions for referring to location or list of locations by an identifier.
-
-Constants:
-    LOCATION_LISTS - a dictionary of location lists
-
-Examples:
-    >>> from nzhsm_common.location.location import LOCATION_LISTS, location_by_id
-    >>> LOCATION_LISTS["NZ"]["locations"][0]
-    'AKL'
-    >>> location_by_id(LOCATION_LISTS["NZ"]["locations"][0])
-    {'id': 'AKL', 'name': 'Auckland', 'latitude': -36.87, 'longitude': 174.77}
 """
 
 import csv
@@ -83,7 +73,7 @@ def _load_csv(locations_filepath, resolution):
 
 def location_by_id(location_code: str) -> Optional[Dict[str, Any]]:
     """
-    Get the CodedLocation for a location identified by an id.
+    Get the information for a location identified by an id.
 
     Parameters:
         location_code: the code (e.g. "WLG") for the location
