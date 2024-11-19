@@ -62,6 +62,7 @@ def test_missing_lat_lon_returns_None():
 @pytest.mark.parametrize(
     "name_in,name_out",
     [
+        ("Otaki", "Ōtaki"),  # should work with capital letters
         ("Hamama", "Hāmama"),
         ("Kerepēhi", "Kerepēhi"),
         ("Ahitītī", "Ahitītī"),

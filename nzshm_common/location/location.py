@@ -60,13 +60,17 @@ def _get_macron_name_mapping() -> Dict[str, str]:
     """using the maori_names.csv file as received from LINZ rather than storing the mapping allows
     us to update without rebuilding the resource"""
 
-    char_map = {
+    char_map_lower = {
         'ā': 'a',
         'ē': 'e',
         'ī': 'i',
         'ō': 'o',
         'ū': 'u',
     }
+    char_map = {}
+    for k, v in char_map_lower.items():
+        char_map[k] = v
+        char_map[k.upper()] = v.upper()
 
     name_mapping = dict()
     with resources.as_file(resource_dir / 'maori_names.csv') as path:
