@@ -1,7 +1,7 @@
 import pytest
 
-from nzshm_common.location.coded_location import CodedLocation
 import nzshm_common.location.location as location
+from nzshm_common.location.coded_location import CodedLocation
 
 
 def test_location_keys_unique():
