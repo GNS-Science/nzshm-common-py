@@ -19,13 +19,11 @@ from nzshm_common.location.types import LatLon
 
 resource_dir = resources.files('nzshm_common.location.resources')
 
-locations_resource = resource_dir  / 'locations.json'
-with resources.as_file(locations_resource) as path:
+with resources.as_file(resource_dir / 'locations.json') as path:
     with path.open() as file:
         LOCATIONS = json.load(file)
 
-nz_ids_resource = resource_dir / 'nz_ids.json'
-with resources.as_file(nz_ids_resource) as path:
+with resources.as_file(resource_dir / 'nz_ids.json') as path:
     with path.open() as file:
         NZ_IDS = json.load(file)
 
