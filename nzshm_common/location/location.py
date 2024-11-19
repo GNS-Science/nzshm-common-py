@@ -1,15 +1,5 @@
 """
 This module contains constants and functions for referring to location or list of locations by an identifier.
-
-Constants:
-    LOCATION_LISTS - a dictionary of location lists
-
-Examples:
-    >>> from nzhsm_common.location.location import LOCATION_LISTS, location_by_id
-    >>> LOCATION_LISTS["NZ"]["locations"][0]
-    'AKL'
-    >>> location_by_id(LOCATION_LISTS["NZ"]["locations"][0])
-    {'id': 'AKL', 'name': 'Auckland', 'latitude': -36.87, 'longitude': 174.77}
 """
 
 import csv
@@ -63,7 +53,7 @@ LOCATION_LISTS = {
 }
 
 
-def lat_lon_by_id(_id) -> Optional[LatLon]:
+def _lat_lon(_id) -> Optional[LatLon]:
     loc = location_by_id(_id)
     if loc:
         return LatLon(loc['latitude'], loc['longitude'])
@@ -125,10 +115,10 @@ def get_locations(locations: Iterable[str], resolution: float = DEFAULT_RESOLUTI
             lat, lon = location_id.split('~')
             coded_locations.append(CodedLocation(float(lat), float(lon), resolution))
         elif location_by_id(location_id):
-            coded_locations.append(CodedLocation(*lat_lon_by_id(location_id), resolution))  # type: ignore
+            coded_locations.append(CodedLocation(*_lat_lon(location_id), resolution))  # type: ignore
         elif LOCATION_LISTS.get(location_id):
             location_ids = LOCATION_LISTS[location_id]["locations"]
-            coded_locations += [CodedLocation(*lat_lon_by_id(_id), resolution) for _id in location_ids]  # type: ignore
+            coded_locations += [CodedLocation(*_lat_lon(_id), resolution) for _id in location_ids]  # type: ignore
         else:
             try:
                 coded_locations += [CodedLocation(*loc, resolution) for loc in load_grid(location_id)]  # type: ignore

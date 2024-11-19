@@ -1,4 +1,4 @@
-from nzshm_common import location
+from nzshm_common.location import location
 from nzshm_common.location.coded_location import CodedLocation
 
 
@@ -53,4 +53,4 @@ def test_rounded_locations():
 
 
 def test_missing_lat_lon_returns_None():
-    assert location.lat_lon_by_id("missingid") is None, "An unknown ID should return a None"
+    assert location._lat_lon("missingid") is None, "An unknown ID should return a None"
