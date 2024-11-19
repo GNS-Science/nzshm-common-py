@@ -3,8 +3,8 @@ This module contains constants and functions for referring to location or list o
 """
 
 import csv
-import json
 import importlib.resources as resources
+import json
 from collections import namedtuple
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional
@@ -54,6 +54,56 @@ LOCATION_LISTS = {
         "locations": list(map(lambda loc: loc["id"], LOCATIONS)),
     },
 }
+
+
+def _get_macron_name_mapping() -> Dict[str, str]:
+    """using the maori_names.csv file as received from LINZ rather than storing the mapping allows
+    us to update without rebuilding the resource"""
+
+    char_map = {
+        'ā': 'a',
+        'ē': 'e',
+        'ī': 'i',
+        'ō': 'o',
+        'ū': 'u',
+    }
+
+    name_mapping = dict()
+    with resources.as_file(resource_dir / 'maori_names.csv') as path:
+        with path.open() as file:
+            reader = csv.reader(file)
+            _ = next(reader)
+            for row in reader:
+                name = row[1]
+                name_nomacron = name
+                for k, v in char_map.items():
+                    name_nomacron = name_nomacron.replace(k, v)
+                name_mapping[name_nomacron] = name
+    return name_mapping
+
+
+NAME_MAPPING = _get_macron_name_mapping()
+
+
+def get_name_with_macrons(name_input: str) -> str:
+    """
+    Corrects the spelling of Māori palce names by adding macrons. Place name spellings from
+    LINZ "Place names of New Zealand".
+    See https://www.linz.govt.nz/products-services/place-names/place-names-new-zealand
+    and https://gazetteer.linz.govt.nz/maori_names.csv
+
+    If the input name is not on the LINZ list, the function will return the input.
+
+    Args:
+        input_name: the name to correct with macrons
+
+    Returns:
+        the place name with the correct Māori spelling
+    """
+
+    if name_output := NAME_MAPPING.get(name_input):
+        return name_output
+    return name_input
 
 
 def _lat_lon(_id) -> Optional[LatLon]:

@@ -1,5 +1,8 @@
-from nzshm_common.location import location
+import pytest
+
+from nzshm_common import location
 from nzshm_common.location.coded_location import CodedLocation
+from nzshm_common.location.location import get_name_with_macrons
 
 
 def test_location_keys_unique():
@@ -54,3 +57,18 @@ def test_rounded_locations():
 
 def test_missing_lat_lon_returns_None():
     assert location._lat_lon("missingid") is None, "An unknown ID should return a None"
+
+
+@pytest.mark.parametrize(
+    "name_in,name_out",
+    [
+        ("Hamama", "Hāmama"),
+        ("Kerepēhi", "Kerepēhi"),
+        ("Ahitītī", "Ahitītī"),
+        ("Haukopua Point", "Haukōpua Point"),
+        ("Hautūterangi", "Hautūterangi"),
+        ("āī", "āī"),  # not in the name list, should return the input
+    ],
+)
+def test_macron_mapping(name_in, name_out):
+    assert get_name_with_macrons(name_in) == name_out
