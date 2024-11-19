@@ -50,7 +50,7 @@ LOCATION_LISTS = {
     },
     "ALL": {
         "id": "ALL",
-        "name": "Seismic Risk Working Group NZ code locations",
+        "name": "All locations",
         "locations": list(map(lambda loc: loc["id"], LOCATIONS)),
     },
 }
