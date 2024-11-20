@@ -25,4 +25,4 @@ Example:
 """
 
 from .coded_location import CodedLocation, CodedLocationBin
-from .location import get_location_list, get_location_list_names, get_locations, location_by_id
+from .location import get_location_list, get_location_list_names, get_locations, get_name_with_macrons, location_by_id
