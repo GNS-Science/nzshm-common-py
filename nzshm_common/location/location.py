@@ -56,7 +56,7 @@ LOCATION_LISTS = {
 }
 
 
-def _get_macron_name_mapping() -> Dict[str, str]:
+def _get_macron_word_mapping() -> Dict[str, str]:
     """using the maori_names.csv file as received from LINZ rather than storing the mapping allows
     us to update without rebuilding the resource"""
 
@@ -71,22 +71,23 @@ def _get_macron_name_mapping() -> Dict[str, str]:
     for k, v in char_map_lower.items():
         char_map[k] = v
         char_map[k.upper()] = v.upper()
+    translation_table = str.maketrans(char_map)
 
-    name_mapping = dict()
+    word_mapping = dict()
     with resources.as_file(resource_dir / 'maori_names.csv') as path:
         with path.open() as file:
             reader = csv.reader(file)
             _ = next(reader)
             for row in reader:
-                name = row[1]
-                name_nomacron = name
-                for k, v in char_map.items():
-                    name_nomacron = name_nomacron.replace(k, v)
-                name_mapping[name_nomacron] = name
-    return name_mapping
+                name = row[1]  # second column of LINZ file contains names
+                for word in name.split():  # treat each whole word seperatly
+                    if any([char in char_map for char in word]):  # add to mapping if any characters have macron
+                        word_nomacron = word.translate(translation_table)
+                        word_mapping[word_nomacron] = word
+    return word_mapping
 
 
-NAME_MAPPING = _get_macron_name_mapping()
+WORD_MAPPING = _get_macron_word_mapping()
 
 
 def get_name_with_macrons(name_input: str) -> str:
@@ -105,9 +106,14 @@ def get_name_with_macrons(name_input: str) -> str:
         the place name with the correct Māori spelling
     """
 
-    if name_output := NAME_MAPPING.get(name_input):
-        return name_output
-    return name_input
+    words_in = name_input.split()
+    return " ".join([_map_word(word) for word in words_in])
+
+
+def _map_word(word_input):
+    if word_output := WORD_MAPPING.get(word_input):
+        return word_output
+    return word_input
 
 
 def _lat_lon(_id) -> Optional[LatLon]:

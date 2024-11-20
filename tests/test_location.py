@@ -58,16 +58,26 @@ def test_missing_lat_lon_returns_None():
     assert location._lat_lon("missingid") is None, "An unknown ID should return a None"
 
 
+def test_word_mapping():
+    for k, v in location.WORD_MAPPING.items():
+        macrons = ['ĀĒĪŌŪāēīōū']
+        assert len(k.split()) == 1
+        assert len(v.split()) == 1
+        assert len(v) == len(k)
+        assert all(char not in macrons for char in k)  # the keys should not contain macrons
+
+
 @pytest.mark.parametrize(
     "name_in,name_out",
     [
         ("Otaki", "Ōtaki"),  # should work with capital letters
         ("Hamama", "Hāmama"),
         ("Kerepēhi", "Kerepēhi"),
-        ("Ahitītī", "Ahitītī"),
+        ("Ahititi", "Ahitītī"),
         ("Haukopua Point", "Haukōpua Point"),
-        ("Hautūterangi", "Hautūterangi"),
-        ("āī", "āī"),  # not in the name list, should return the input
+        ("Haututerangi", "Hautūterangi"),
+        ("Oakura (New Plymouth District)", "Ōakura (New Plymouth District)"),  # handle whole word parts of names
+        ("Wellington", "Wellington"),  # not in the name list, should return the input
     ],
 )
 def test_macron_mapping(name_in, name_out):
