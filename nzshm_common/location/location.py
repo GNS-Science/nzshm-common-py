@@ -75,7 +75,7 @@ def _get_macron_word_mapping() -> Dict[str, str]:
 
     word_mapping = dict()
     with resources.as_file(resource_dir / 'maori_names.csv') as path:
-        with path.open() as file:
+        with path.open(encoding='utf-8') as file:
             reader = csv.reader(file)
             _ = next(reader)
             for row in reader:
