@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.4] - 2024-11-20
+
+### Added
+ - function `get_name_with_macrons` to map place names to correct Māori spelling with macrons
+
+### Changed
+ - moved `location` package resources to sub-package and import with `importlib.resources`
+
+## [0.8.3] - 2024-10-09
+
+### Changed
+ - import `location.location` functions into base package init for ease of use
+
+### Fixed
+ - docstring for function `nzshm_common.location.location_by_id`
+
+## [0.8.2] - 2024-09-21
+### Added
+ - within_polygon helper function
 
 ## [0.8.1] - 2024-07-03
 bumpversion required to trigger updated build pipeline

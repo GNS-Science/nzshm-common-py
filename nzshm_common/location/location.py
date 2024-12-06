@@ -1,18 +1,9 @@
 """
 This module contains constants and functions for referring to location or list of locations by an identifier.
-
-Constants:
-    LOCATION_LISTS - a dictionary of location lists
-
-Examples:
-    >>> from nzhsm_common.location.location import LOCATION_LISTS, location_by_id
-    >>> LOCATION_LISTS["NZ"]["locations"][0]
-    'AKL'
-    >>> location_by_id(LOCATION_LISTS["NZ"]["locations"][0])
-    {'id': 'AKL', 'name': 'Auckland', 'latitude': -36.87, 'longitude': 174.77}
 """
 
 import csv
+import importlib.resources as resources
 import json
 from collections import namedtuple
 from pathlib import Path
@@ -26,13 +17,15 @@ from nzshm_common.location.types import LatLon
 # Omitting country for now, focus on NZ
 # https://service.unece.org/trade/locode/nz.htm
 
-locations_filepath = Path(Path(__file__).parent, 'locations.json')
-with open(locations_filepath, 'r') as locations_file:
-    LOCATIONS = json.load(locations_file)
+resource_dir = resources.files('nzshm_common.location.resources')
 
-nz_ids_filepath = Path(Path(__file__).parent, 'nz_ids.json')
-with open(nz_ids_filepath, 'r') as nz_ids_file:
-    NZ_IDS = json.load(nz_ids_file)
+with resources.as_file(resource_dir / 'locations.json') as path:
+    with path.open() as file:
+        LOCATIONS = json.load(file)
+
+with resources.as_file(resource_dir / 'nz_ids.json') as path:
+    with path.open() as file:
+        NZ_IDS = json.load(file)
 
 LOCATIONS_BY_ID: Dict[str, Any] = {location["id"]: location for location in LOCATIONS}
 
@@ -57,10 +50,70 @@ LOCATION_LISTS = {
     },
     "ALL": {
         "id": "ALL",
-        "name": "Seismic Risk Working Group NZ code locations",
+        "name": "All locations",
         "locations": list(map(lambda loc: loc["id"], LOCATIONS)),
     },
 }
+
+
+def _get_macron_word_mapping() -> Dict[str, str]:
+    """using the maori_names.csv file as received from LINZ rather than storing the mapping allows
+    us to update without rebuilding the resource"""
+
+    char_map_lower = {
+        'ā': 'a',
+        'ē': 'e',
+        'ī': 'i',
+        'ō': 'o',
+        'ū': 'u',
+    }
+    char_map = {}
+    for k, v in char_map_lower.items():
+        char_map[k] = v
+        char_map[k.upper()] = v.upper()
+    translation_table = str.maketrans(char_map)
+
+    word_mapping = dict()
+    with resources.as_file(resource_dir / 'maori_names.csv') as path:
+        with path.open(encoding='utf-8') as file:
+            reader = csv.reader(file)
+            _ = next(reader)
+            for row in reader:
+                name = row[1]  # second column of LINZ file contains names
+                for word in name.split():  # treat each whole word seperatly
+                    if any([char in char_map for char in word]):  # add to mapping if any characters have macron
+                        word_nomacron = word.translate(translation_table)
+                        word_mapping[word_nomacron] = word
+    return word_mapping
+
+
+WORD_MAPPING = _get_macron_word_mapping()
+
+
+def get_name_with_macrons(name_input: str) -> str:
+    """
+    Corrects the spelling of Māori palce names by adding macrons. Place name spellings from
+    LINZ "Place names of New Zealand".
+    See https://www.linz.govt.nz/products-services/place-names/place-names-new-zealand
+    and https://gazetteer.linz.govt.nz/maori_names.csv
+
+    If the input name is not on the LINZ list, the function will return the input.
+
+    Args:
+        input_name: the name to correct with macrons
+
+    Returns:
+        the place name with the correct Māori spelling
+    """
+
+    words_in = name_input.split()
+    return " ".join([_map_word(word) for word in words_in])
+
+
+def _map_word(word_input):
+    if word_output := WORD_MAPPING.get(word_input):
+        return word_output
+    return word_input
 
 
 def _lat_lon(_id) -> Optional[LatLon]:
@@ -83,7 +136,7 @@ def _load_csv(locations_filepath, resolution):
 
 def location_by_id(location_code: str) -> Optional[Dict[str, Any]]:
     """
-    Get the CodedLocation for a location identified by an id.
+    Get the information for a location identified by an id.
 
     Parameters:
         location_code: the code (e.g. "WLG") for the location

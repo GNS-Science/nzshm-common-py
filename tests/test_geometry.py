@@ -1,12 +1,17 @@
 import math
 import unittest
 
+from nzshm_common import CodedLocation
 from nzshm_common.grids import RegionGrid, load_grid
 
 try:
     import shapely  # noqa
 
-    from nzshm_common.geometry.geometry import create_hexagon, create_square_tile  # these require shapely
+    from nzshm_common.geometry.geometry import (  # these require shapely
+        create_hexagon,
+        create_square_tile,
+        within_polygon,
+    )
 
     HAVE_SHAPELY = True
 except ImportError:
@@ -106,3 +111,21 @@ class TestHex(unittest.TestCase):
         print('cell spacing', cells[0].distance(cells[1]))
 
         self.assertAlmostEqual(cells[0].distance(cells[1]), 0.0)
+
+
+@unittest.skipUnless(HAVE_SHAPELY, "Test requires optional shapely module.")
+def test_within_polygon():
+    coords = ((0.0, 0.0), (0.0, 1.0), (1.0, 1.0), (1.0, 0.0), (0.0, 0.0))
+    polygon = shapely.geometry.Polygon(coords)
+    locations = [
+        CodedLocation(0, 0, 0.001),
+        CodedLocation(2, 2, 0.001),
+        CodedLocation(0.5, 2, 0.001),
+        CodedLocation(0.5, 0.5, 0.001),
+    ]
+    within_expected = [False, False, False, True]
+
+    within = within_polygon(locations, polygon)
+
+    assert len(within) == len(within_expected)
+    assert within == within_expected
