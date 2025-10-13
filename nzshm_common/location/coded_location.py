@@ -10,7 +10,6 @@ manageable chunks:
 grid at 0.1 and 0.5 degrees](../../images/location_binning.png)
 """
 
-
 import decimal
 import warnings
 from collections import OrderedDict
