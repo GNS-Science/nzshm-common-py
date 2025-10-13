@@ -25,6 +25,11 @@ packages = [
 	{ include = "tests", format = "sdist" }
 ]
 
+[project.optional-dependencies]
+geometry = [
+    "shapely",
+]
+
 [tool.poetry.group.doc]
 optional = true
 
