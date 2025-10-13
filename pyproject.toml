@@ -9,7 +9,7 @@ authors = [
     { name = "Chris B Chamberlain", email = "chrisbc@artisan.co.nz" },
     {name = "Chris DiCaprio", email = "christopher.dicaprio@gmail.com"},
     {name="Oakley Jurgens", email="oakley.jurgens@gmail.com"},
-    {name="NSHM Compute Working Group", email="nshsm@gns.cri.nz"}
+    {name="NSHM Compute Working Group", email="nshm@gns.cri.nz"}
 ]
 classifiers=[
     'Development Status :: 2 - Pre-Alpha',
