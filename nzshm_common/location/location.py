@@ -151,6 +151,48 @@ def location_by_id(location_code: str) -> Optional[Dict[str, Any]]:
     return LOCATIONS_BY_ID.get(location_code)
 
 
+def get_location_ids(location_list_names: Iterable[str]) -> List[str]:
+    """
+    Get a list of location ids for given location list names.
+
+    Valid location list names can be found using `get_location_list_names()`.
+
+    Args:
+        location_list_names: an iterable of LOCATION_LISTS keys.
+
+    Returns:
+        A list of location ids for the given location list.
+
+    Raises:
+        KeyError: if a location list name is not valid
+    """
+    ids = []
+    for list_name in location_list_names:
+        if not LOCATION_LISTS.get(list_name):
+            raise KeyError(f"location list {list_name} is not valid")
+        ids += LOCATION_LISTS[list_name]["locations"]
+    return ids
+
+
+def get_location_dicts(location_list_names: Iterable[str]) -> List[Dict[str, Any]]:
+    """
+    Get the full location data for given location list names.
+
+    Valid location list names can be found using `get_location_list_names()`.
+    A location dictionary contains the location id, name, latitude, and longitude.
+
+    Args:
+        location_list_names: an iterable of LOCATION_LISTS keys.
+
+    Returns:
+        A list of location data dictionaries for the given location list.
+
+    Raises:
+        KeyError: if a location list name is not valid
+    """
+    return [LOCATIONS_BY_ID[loc_id] for loc_id in get_location_ids(location_list_names)]
+
+
 def get_locations(locations: Iterable[str], resolution: float = DEFAULT_RESOLUTION) -> List[CodedLocation]:
     """
     Get the coded locations from a list of identifiers.
