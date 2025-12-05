@@ -151,6 +151,26 @@ def location_by_id(location_code: str) -> Optional[Dict[str, Any]]:
     return LOCATIONS_BY_ID.get(location_code)
 
 
+def get_location_ids(location_list_name: str) -> List[str]:
+    """
+    Get a list of location ids for a given location list.
+
+    Valid location list names can be found using `get_location_list_names()`.
+
+    Args:
+        location_list_name: a key in LOCATION_LISTS
+
+    Returns:
+        A list of location ids for the given location list.
+
+    Raises:
+        KeyError: if the location list name is not valid
+    """
+    if not LOCATION_LISTS.get(location_list_name):
+        raise KeyError(f"location list {location_list_name} is not valid")
+    return LOCATION_LISTS[location_list_name]["locations"]
+
+
 def get_locations(locations: Iterable[str], resolution: float = DEFAULT_RESOLUTION) -> List[CodedLocation]:
     """
     Get the coded locations from a list of identifiers.

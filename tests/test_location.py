@@ -18,7 +18,7 @@ def test_location_lists():
 def test_vs30():
     for id in location.LOCATION_LISTS["HB"]["locations"]:
         assert location.LOCATIONS_BY_ID[id].get("vs30")
-    assert location.LOCATIONS_BY_ID[f"hb_{2603-2}"]["vs30"] == 150
+    assert location.LOCATIONS_BY_ID[f"hb_{2603 - 2}"]["vs30"] == 150
 
 
 def test_location_rot():
@@ -82,3 +82,11 @@ def test_word_mapping():
 )
 def test_macron_mapping(name_in, name_out):
     assert location.get_name_with_macrons(name_in) == name_out
+
+
+def test_get_location_ids():
+    for location_list_name in location.get_location_list_names():
+        assert location.get_location_ids(location_list_name) == location.LOCATION_LISTS[location_list_name]['locations']
+
+    with pytest.raises(KeyError):
+        location.get_location_ids("INVALID_NAME")
