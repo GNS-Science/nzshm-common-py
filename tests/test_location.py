@@ -86,7 +86,24 @@ def test_macron_mapping(name_in, name_out):
 
 def test_get_location_ids():
     for location_list_name in location.get_location_list_names():
-        assert location.get_location_ids(location_list_name) == location.LOCATION_LISTS[location_list_name]['locations']
+        assert (
+            location.get_location_ids([location_list_name]) == location.LOCATION_LISTS[location_list_name]['locations']
+        )
+
+    assert location.get_location_ids(["NZ", "SRWG214"]) == (
+        location.LOCATION_LISTS["NZ"]["locations"] + location.LOCATION_LISTS["SRWG214"]["locations"]
+    )
 
     with pytest.raises(KeyError):
-        location.get_location_ids("INVALID_NAME")
+        location.get_location_ids(["INVALID_NAME"])
+
+
+def test_get_location_dicts():
+    nz_locations = location.get_location_dicts(["NZ"])
+    assert len(nz_locations) == 36
+    ids = [loc['id'] for loc in nz_locations]
+    assert "WLG" in ids
+    assert nz_locations[ids.index("WLG")] == location.location_by_id("WLG")
+
+    with pytest.raises(KeyError):
+        location.get_location_ids(["INVALID_NAME"])
