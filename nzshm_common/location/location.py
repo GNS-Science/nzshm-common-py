@@ -3,10 +3,10 @@ This module contains constants and functions for referring to location or list o
 """
 
 import csv
-from dataclasses import dataclass
 import importlib.resources as resources
 import json
 from collections import namedtuple
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional
 
@@ -18,8 +18,11 @@ from nzshm_common.location.types import LatLon
 # Omitting country for now, focus on NZ
 # https://service.unece.org/trade/locode/nz.htm
 
+
 @dataclass(frozen=True)
 class Location:
+    """Data class for location information stored in package resources."""
+
     id: str
     name: str
     latitude: float
