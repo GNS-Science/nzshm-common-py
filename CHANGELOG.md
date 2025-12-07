@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.10.0] - 2025-12-05
+### Added
+ - function `get_location_ids` to get loction ids from location list names
+ - function `get_location_data` to get location ids, names, coordinates, and (optional) vs30 from location list names.
+
 ## [0.9.0] - 2025-10-13
 ### Changed
 - migrated `pyproject.toml` to [PEP 508](https://peps.python.org/pep-0508) as per poetry v2.2 docs.

@@ -6,6 +6,7 @@ import csv
 import importlib.resources as resources
 import json
 from collections import namedtuple
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional
 
@@ -16,6 +17,18 @@ from nzshm_common.location.types import LatLon
 
 # Omitting country for now, focus on NZ
 # https://service.unece.org/trade/locode/nz.htm
+
+
+@dataclass(frozen=True)
+class Location:
+    """Data class for location information stored in package resources."""
+
+    id: str
+    name: str
+    latitude: float
+    longitude: float
+    vs30: Optional[float] = None
+
 
 resource_dir = resources.files('nzshm_common.location.resources')
 
@@ -149,6 +162,48 @@ def location_by_id(location_code: str) -> Optional[Dict[str, Any]]:
         {'id': 'WLG', 'name': 'Wellington', 'latitude': -41.3, 'longitude': 174.78}
     """
     return LOCATIONS_BY_ID.get(location_code)
+
+
+def get_location_ids(location_list_names: Iterable[str]) -> List[str]:
+    """
+    Get a list of location ids for given location list names.
+
+    Valid location list names can be found using `get_location_list_names()`.
+
+    Args:
+        location_list_names: an iterable of LOCATION_LISTS keys.
+
+    Returns:
+        A list of location ids for the given location list.
+
+    Raises:
+        KeyError: if a location list name is not valid
+    """
+    ids = []
+    for list_name in location_list_names:
+        if not LOCATION_LISTS.get(list_name):
+            raise KeyError(f"location list {list_name} is not valid")
+        ids += LOCATION_LISTS[list_name]["locations"]
+    return ids
+
+
+def get_location_data(location_list_names: Iterable[str]) -> List[Location]:
+    """
+    Get the full location data for given location list names.
+
+    Valid location list names can be found using `get_location_list_names()`.
+    A location dictionary contains the location id, name, latitude, and longitude.
+
+    Args:
+        location_list_names: an iterable of LOCATION_LISTS keys.
+
+    Returns:
+        A list of location data for the given location list.
+
+    Raises:
+        KeyError: if a location list name is not valid
+    """
+    return [Location(**LOCATIONS_BY_ID[loc_id]) for loc_id in get_location_ids(location_list_names)]
 
 
 def get_locations(locations: Iterable[str], resolution: float = DEFAULT_RESOLUTION) -> List[CodedLocation]:
