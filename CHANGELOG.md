@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.10.0] - 2025-12-05
 ### Added
  - function `get_location_ids` to get loction ids from location list names
- - function `get_location_dicts` to get location ids, names, and coordinates from location list names.
+ - function `get_location_data` to get location ids, names, coordinates, and (optional) vs30 from location list names.
 
 ## [0.9.0] - 2025-10-13
 ### Changed
