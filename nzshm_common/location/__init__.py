@@ -26,6 +26,8 @@ Example:
 
 from .coded_location import CodedLocation, CodedLocationBin
 from .location import (
+    Location,
+    get_location_data,
     get_location_ids,
     get_location_list,
     get_location_list_names,

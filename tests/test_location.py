@@ -98,12 +98,12 @@ def test_get_location_ids():
         location.get_location_ids(["INVALID_NAME"])
 
 
-def test_get_location_dicts():
-    nz_locations = location.get_location_dicts(["NZ"])
+def test_get_location_data():
+    nz_locations = location.get_location_data(["NZ"])
     assert len(nz_locations) == 36
-    ids = [loc['id'] for loc in nz_locations]
+    ids = [loc.id for loc in nz_locations]
     assert "WLG" in ids
-    assert nz_locations[ids.index("WLG")] == location.location_by_id("WLG")
+    assert nz_locations[ids.index("WLG")] == location.Location(**(location.location_by_id("WLG")))
 
     with pytest.raises(KeyError):
         location.get_location_ids(["INVALID_NAME"])

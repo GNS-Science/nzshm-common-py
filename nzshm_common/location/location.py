@@ -3,6 +3,7 @@ This module contains constants and functions for referring to location or list o
 """
 
 import csv
+from dataclasses import dataclass
 import importlib.resources as resources
 import json
 from collections import namedtuple
@@ -16,6 +17,15 @@ from nzshm_common.location.types import LatLon
 
 # Omitting country for now, focus on NZ
 # https://service.unece.org/trade/locode/nz.htm
+
+@dataclass(frozen=True)
+class Location:
+    id: str
+    name: str
+    latitude: float
+    longitude: float
+    vs30: Optional[float] = None
+
 
 resource_dir = resources.files('nzshm_common.location.resources')
 
@@ -174,7 +184,7 @@ def get_location_ids(location_list_names: Iterable[str]) -> List[str]:
     return ids
 
 
-def get_location_dicts(location_list_names: Iterable[str]) -> List[Dict[str, Any]]:
+def get_location_data(location_list_names: Iterable[str]) -> List[Location]:
     """
     Get the full location data for given location list names.
 
@@ -185,12 +195,12 @@ def get_location_dicts(location_list_names: Iterable[str]) -> List[Dict[str, Any
         location_list_names: an iterable of LOCATION_LISTS keys.
 
     Returns:
-        A list of location data dictionaries for the given location list.
+        A list of location data for the given location list.
 
     Raises:
         KeyError: if a location list name is not valid
     """
-    return [LOCATIONS_BY_ID[loc_id] for loc_id in get_location_ids(location_list_names)]
+    return [Location(**LOCATIONS_BY_ID[loc_id]) for loc_id in get_location_ids(location_list_names)]
 
 
 def get_locations(locations: Iterable[str], resolution: float = DEFAULT_RESOLUTION) -> List[CodedLocation]:
