@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.1] 2026-01-20
+### Added
+ - `audit` environment for tox
+
+### Changed
+ - update dependencies for new advisories
+
 ## [0.9.0] - 2025-10-13
 ### Changed
 - migrated `pyproject.toml` to [PEP 508](https://peps.python.org/pep-0508) as per poetry v2.2 docs.
