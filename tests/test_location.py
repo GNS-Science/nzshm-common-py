@@ -18,7 +18,7 @@ def test_location_lists():
 def test_vs30():
     for id in location.LOCATION_LISTS["HB"]["locations"]:
         assert location.LOCATIONS_BY_ID[id].get("vs30")
-    assert location.LOCATIONS_BY_ID[f"hb_{2603-2}"]["vs30"] == 150
+    assert location.LOCATIONS_BY_ID[f"hb_{2603 - 2}"]["vs30"] == 150
 
 
 def test_location_rot():
