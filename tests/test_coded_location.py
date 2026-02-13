@@ -210,5 +210,5 @@ def test_deserialize_pydantic_76():
     data = model.model_dump()
 
     model_deser = MyModel(**data)
-    assert model_deser.location.lat == model.location.lat
+    assert model.location == model_deser.location
     assert model_deser.location._code
