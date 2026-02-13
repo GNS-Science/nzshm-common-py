@@ -195,13 +195,20 @@ def test_resolution_bounds(resolution, expectation):
     with expectation:
         CodedLocation(-41.333, 174.78, resolution)
 
-def test_deserialize_pydantic():
+def test_deserialize_pydantic_76():
+    """The origional design of CodedLocation caused is deserialization by pydantic BaseModel to not initialize
+    correctly and be missing the _code attribute.
+
+    https://github.com/GNS-Science/nzshm-common-py/issues/76
+    
+    """
     class MyModel(BaseModel):
         location: CodedLocation
 
-    loc = CodedLocation(-45.2, 175.2, 0.1)
+    loc = CodedLocation(-45.27, 175.2, 0.1)
     model = MyModel(location=loc)
     data = model.model_dump()
 
     model_deser = MyModel(**data)
+    assert model_deser.location.lat == model.location.lat
     assert model_deser.location._code
