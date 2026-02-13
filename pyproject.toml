@@ -3,7 +3,6 @@ name = "nzshm-common"
 version = "0.9.1"
 description = "A small pure python library for shared NZ NSHM data like locations."
 readme = "README.md"
-homepage = "https://github.com/GNS-Science/nzshm-common-py"
 license = "AGPL-3.0-or-later"
 authors = [
     { name = "Chris B Chamberlain", email = "chrisbc@artisan.co.nz" },
@@ -11,19 +10,22 @@ authors = [
     {name="Oakley Jurgens", email="oakley.jurgens@gmail.com"},
     {name="NSHM Compute Working Group", email="nshm@gns.cri.nz"}
 ]
-classifiers=[
-    'Development Status :: 2 - Pre-Alpha',
-    'Intended Audience :: Developers',
-    'Natural Language :: English',
-    'Programming Language :: Python :: 3',
-]
 requires-python = ">=3.10,<4.0"
+
+[project.urls]
+Homepage = "https://github.com/GNS-Science/nzshm-common-py"
+Documentation = "https://gns-science.github.io/nzshm-common-py"
+Issues = "https://github.com/GNS-Science/nzshm-common-py/issues"
+Changelog = "https://github.com/GNS-Science/nzshm-common-py/blob/main/CHANGELOG.md"
 
 [tool.poetry]
 packages = [
 	{ include = "nzshm_common" },
 	{ include = "tests", format = "sdist" }
 ]
+
+[tool.poetry.requires-plugins]
+poetry-plugin-export = ">=1.8"
 
 [project.optional-dependencies]
 geometry = [
