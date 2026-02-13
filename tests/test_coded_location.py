@@ -1,5 +1,6 @@
 import random
 import unittest
+from pydantic import BaseModel
 
 import pytest
 
@@ -193,3 +194,14 @@ def test_resolution_bounds(resolution, expectation):
     """Ensure invalid resolutions throw an assertion error before calculating."""
     with expectation:
         CodedLocation(-41.333, 174.78, resolution)
+
+def test_deserialize_pydantic():
+    class MyModel(BaseModel):
+        location: CodedLocation
+
+    loc = CodedLocation(-45.2, 175.2, 0.1)
+    model = MyModel(location=loc)
+    data = model.model_dump()
+
+    model_deser = MyModel(**data)
+    assert model_deser.location._code
