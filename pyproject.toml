@@ -46,16 +46,16 @@ dev = [
     "flake8",
     "isort",
     "mypy",
-    "pip-audit (>=2.9.0,<3.0.0)",
+    "pip-audit (>=2.9.0)",
     "pre-commit",
     "pytest-cov",
     "pytest",
-    "safety (>=3.6.2,<4.0.0)",
+    "safety (>=3.6.2)",
     "shapely",
     "toml",
     "tox",
     "twine",
-    "pydantic (>=2.12.5,<3.0.0)"
+    "pydantic (>=2.12.5)"
 ]
 
 doc = [
