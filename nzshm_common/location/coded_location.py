@@ -20,38 +20,35 @@ from nzshm_common.constants import DEFAULT_RESOLUTION
 from nzshm_common.location.types import LatLon
 
 
-@dataclass(init=False, unsafe_hash=True)
+@dataclass(unsafe_hash=True)
 class CodedLocation:
     """A location resolved to the nearest point on a grid with given resolution (degrees).
 
     Refer to [https://stackoverflow.com/a/28750072](https://stackoverflow.com/a/28750072)
     for the techniques used here to calculate decimal places.
+
+    Arguments:
+        lat: latitude
+        lon: longitude
+        resolution: the resolution used to resolve the location
     """
 
     lat: float = field(hash=True)
     lon: float = field(hash=True)
     resolution: float = field(hash=True)
 
-    def __init__(self, lat: float, lon: float, resolution: float) -> None:
-        """
-        Create a CodedLocation instance.
+    def __post_init__(self) -> None:
+        assert 0 < self.resolution < 180, "Resolution must be between 0 and 180 degrees."
 
-        Arguments:
-            lat: latitude
-            lon: longitude
-            resolution: the resolution used to resolve the location
-        """
-        assert 0 < resolution < 180, "Resolution must be between 0 and 180 degrees."
-
-        self.grid_res = decimal.Decimal(str(resolution).rstrip("0"))
+        self.grid_res = decimal.Decimal(str(self.resolution).rstrip("0"))
         self.display_places = max(abs(self.grid_res.as_tuple().exponent), 1)  # type: ignore
 
         div_res = 1 / float(self.grid_res)
         places = abs(decimal.Decimal(div_res).as_tuple().exponent)  # type: ignore
 
-        self.lon = round(lon * div_res, places) / div_res
-        self.lat = round(lat * div_res, places) / div_res
-        self.resolution = resolution
+        self.lon = round(self.lon * div_res, places) / div_res
+        self.lat = round(self.lat * div_res, places) / div_res
+        self.resolution = self.resolution
 
         self._code = f"{self.lat:.{self.display_places}f}~{self.lon:.{self.display_places}f}"
 

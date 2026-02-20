@@ -193,3 +193,11 @@ def test_resolution_bounds(resolution, expectation):
     """Ensure invalid resolutions throw an assertion error before calculating."""
     with expectation:
         CodedLocation(-41.333, 174.78, resolution)
+
+
+def test_wrong_resolution():
+    """CodedLocation should raise an exception if resolution is outside 0-180."""
+    with pytest.raises(AssertionError):
+        CodedLocation(-45.27, 175.2, 181)
+    with pytest.raises(AssertionError):
+        CodedLocation(-45.27, 175.2, -1)

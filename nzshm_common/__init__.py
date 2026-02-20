@@ -1,6 +1,6 @@
 __author__ = "GNS Science"
 __email__ = 'nshm@gns.cri.nz'
-__version__ = '0.9.1'
+__version__ = '0.9.2'
 
 
 # Common classes at the top level for convenience
