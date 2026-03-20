@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.3] 2026-03-20
+### Changed
+ - upgrade dependencies
+
 ## [0.9.2] 2026-02-13
 ### Changed
  - use `__post_init__` instead of `__init__` for `CodedLocation` so that `CodedLocation` objects can be properly deserialized as members of a pydantic `BaseModel`
