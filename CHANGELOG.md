@@ -7,9 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
- - upgrade authlib 1.6.6 → 1.6.9 (fixes CVE-2026-27962, CVE-2026-28802, CVE-2026-28490)
- - upgrade nltk 3.9.2 → 3.9.3 (fixes CVE-2025-14009)
- - upgrade black 26.1.0 → 26.3.1 (fixes CVE-2026-32274)
+ - upgrade dependencies
 
 ## [0.9.2] 2026-02-13
 ### Changed
