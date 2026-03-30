@@ -1,7 +1,6 @@
 import warnings
 from collections import namedtuple
 from enum import Enum
-from functools import partial
 from typing import Iterable, List, Optional, cast
 
 from nzshm_common.grids.nz_0_1_nb_1_v0 import NZ01nb1v0
@@ -97,14 +96,9 @@ def get_location_grid(location_grid_name: str, resolution: Optional[float] = Non
         warnings.warn(warn_msg, stacklevel=2)
 
     grid_values = load_grid(location_grid_name)
-    coded_at_resolution = partial(CodedLocation.from_tuple, resolution=cast(float, resolution))
+    location_list = [CodedLocation.from_tuple(gv, resolution=cast(float, resolution)) for gv in grid_values]
     # Remove duplicate coordinates from collection, preserving order.
-    location_list = []
-    for loc in map(coded_at_resolution, grid_values):
-        if loc not in location_list:
-            location_list.append(loc)
-
-    return location_list
+    return list(dict.fromkeys(location_list))
 
 
 def get_location_grid_names() -> Iterable[str]:
