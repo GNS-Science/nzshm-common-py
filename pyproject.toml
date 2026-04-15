@@ -1,6 +1,6 @@
 [project]
 name = "nzshm-common"
-version = "0.9.4"
+version = "0.9.5"
 description = "A small pure python library for shared NZ NSHM data like locations."
 readme = "README.md"
 license = "AGPL-3.0-or-later"
@@ -10,7 +10,7 @@ authors = [
     {name="Oakley Jurgens", email="oakley.jurgens@gmail.com"},
     {name="NSHM Compute Working Group", email="nshm@gns.cri.nz"}
 ]
-requires-python = ">=3.10,<4.0"
+requires-python = ">=3.10"
 
 [project.urls]
 Homepage = "https://github.com/GNS-Science/nzshm-common-py"
@@ -18,25 +18,10 @@ Documentation = "https://gns-science.github.io/nzshm-common-py"
 Issues = "https://github.com/GNS-Science/nzshm-common-py/issues"
 Changelog = "https://github.com/GNS-Science/nzshm-common-py/blob/main/CHANGELOG.md"
 
-[tool.poetry]
-packages = [
-	{ include = "nzshm_common" },
-	{ include = "tests", format = "sdist" }
-]
-
-[tool.poetry.requires-plugins]
-poetry-plugin-export = ">=1.8"
-
 [project.optional-dependencies]
 geometry = [
     "shapely",
 ]
-
-[tool.poetry.group.doc]
-optional = true
-
-[tool.poetry.group.dev]
-optional = true
 
 [dependency-groups]
 dev = [
@@ -99,6 +84,12 @@ ensure_newline_before_comments = true
 line_length = 120
 skip_gitignore = true
 
+[tool.uv]
+exclude-newer = "1 week"
+
+[tool.hatch.build.targets.wheel]
+packages = ["nzshm_common"]
+
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"

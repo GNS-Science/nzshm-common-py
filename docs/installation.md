@@ -11,10 +11,10 @@ terminal:
 $ pip install nzhsm-common
 ```
 
-### using  poetry
+### using uv
 
 ``` console
-$ poetry add nzhsm-common
+$ uv add nzhsm-common
 ```
 
 These are the preferred method to install nzhsm-common, as they will always install the most recent stable release.
@@ -38,7 +38,7 @@ $ pip install .
 or
 
 ```console
-$ poetry install
+$ uv sync
 ```
 
 [pip]: https://pip.pypa.io

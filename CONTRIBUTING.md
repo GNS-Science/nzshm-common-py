@@ -55,11 +55,11 @@ Ready to contribute? Here's how to set up `nzhsm-common-py` for local developmen
    $ git clone git@github.com:your_name_here/nzhsm-common-py.git
    ```
 
-3. Ensure [poetry](https://python-poetry.org/docs/) is installed.
+3. Ensure [uv](https://docs.astral.sh/uv/) is installed.
 4. Install dependencies and start your virtualenv:
 
    ```
-   $ poetry install --all-extras
+   $ uv sync --all-groups --all-extras
    ```
 
 5. Create a branch for local development:
@@ -74,7 +74,7 @@ Ready to contribute? Here's how to set up `nzhsm-common-py` for local developmen
    tests, including testing other Python versions, with tox:
 
    ```
-   $ poetry run tox
+   $ uv run tox
    ```
 
 7. Commit your changes and push your branch to GitHub:
@@ -95,7 +95,7 @@ Before you submit a pull request, check that it meets these guidelines:
 2. If the pull request adds functionality, the docs should be updated. Put
    your new functionality into a function with a docstring, and add the
    feature to the list in README.md.
-3. The pull request should work for Python 3.6, 3.7, 3.8 and 3.9. Check
+3. The pull request should work for Python 3.10, 3.11 and 3.12. Check
    https://github.com/GNS-Science/nzhsm-common-py/actions
    and make sure that the tests pass for all supported Python versions.
 
@@ -103,8 +103,8 @@ Before you submit a pull request, check that it meets these guidelines:
 
 To run a subset of tests, try:
 ```
-$ poetry run pytest tests/????.py
-$ poetry run pytest -k somekeyword
+$ uv run pytest tests/????.py
+$ uv run pytest -k somekeyword
 ```
 
 
@@ -115,7 +115,7 @@ Make sure all your changes are committed (including an entry in CHANGELOG.md).
 Then run:
 
 ```
-$ poetry run bump2version patch # possible: major / minor / patch
+$ uv run bump2version patch # possible: major / minor / patch
 $ git push
 $ git push --tags
 ```
