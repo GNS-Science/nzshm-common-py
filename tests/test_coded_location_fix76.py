@@ -33,7 +33,7 @@ def test_deserialize_pydantic_bug():
     model_deser = DummyMyModel(**data)
 
     with pytest.raises(AttributeError):
-        model_deser.b
+        model_deser.b  # noqa: B018
 
 
 def test_deserialize_pydantic_76():

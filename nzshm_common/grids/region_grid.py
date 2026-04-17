@@ -1,7 +1,8 @@
 import warnings
 from collections import namedtuple
+from collections.abc import Iterable
 from enum import Enum
-from typing import Iterable, List, Optional, cast
+from typing import cast
 
 from nzshm_common.grids.nz_0_1_nb_1_v0 import NZ01nb1v0
 from nzshm_common.grids.nz_0_1_nb_1_v1 import NZ01nb1v1
@@ -48,7 +49,7 @@ class RegionGrid(Enum):
         return self.grid.load()
 
 
-def load_grid(grid_name: str) -> List[LatLon]:
+def load_grid(grid_name: str) -> list[LatLon]:
     """
     Load values from a region grid as `LatLon` pairs.
 
@@ -65,7 +66,7 @@ def load_grid(grid_name: str) -> List[LatLon]:
     return RegionGrid[grid_name].load()
 
 
-def get_location_grid(location_grid_name: str, resolution: Optional[float] = None) -> Iterable[CodedLocation]:
+def get_location_grid(location_grid_name: str, resolution: float | None = None) -> Iterable[CodedLocation]:
     """
     Get all coded locations within a grid.
 

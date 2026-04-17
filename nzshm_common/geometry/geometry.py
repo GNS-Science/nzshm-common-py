@@ -1,7 +1,8 @@
 """Simple polygon builder methods."""
 
 import math
-from typing import TYPE_CHECKING, Iterable, List
+from collections.abc import Iterable
+from typing import TYPE_CHECKING
 
 import shapely.wkt
 from shapely.geometry import Point, Polygon
@@ -61,7 +62,7 @@ def backarc_polygon() -> Polygon:
 # TODO: consider if this function and any of the geometry operation functions belong in thier own repo. This
 # would remove dependencies from what is supposed to be a pure python library and allow us to consolodate
 # all geometry operations into one lib (including those in solvis and eq-fault-geom)
-def within_polygon(locations: Iterable['CodedLocation'], polygon: Polygon) -> List[bool]:
+def within_polygon(locations: Iterable['CodedLocation'], polygon: Polygon) -> list[bool]:
     """
     Check if points are within a given polygon.
     Uses shapley.geometry.Polygon.contains() which will be false for points on the polygon boundary.

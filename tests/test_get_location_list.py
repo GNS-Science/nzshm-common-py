@@ -61,12 +61,12 @@ def test_resolution_override():
     assert len(location_list) == len(LOCATION_LISTS["NZ"]["locations"]), "Should match count for NZ locations"
 
     location_list_codes = [loc.code for loc in location_list]
-    assert (
-        get_locations(["AKL"])[0].code not in location_list_codes
-    ), "Should not find Auckland code at default resolution"
-    assert (
-        get_locations(["AKL"], resolution=custom_resolution)[0].code in location_list_codes
-    ), "Should find Auckland code at custom resolution"
+    assert get_locations(["AKL"])[0].code not in location_list_codes, (
+        "Should not find Auckland code at default resolution"
+    )
+    assert get_locations(["AKL"], resolution=custom_resolution)[0].code in location_list_codes, (
+        "Should find Auckland code at custom resolution"
+    )
 
 
 def test_names():
