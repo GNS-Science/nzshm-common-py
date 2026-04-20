@@ -13,8 +13,8 @@ grid at 0.1 and 0.5 degrees](../../images/location_binning.png)
 import decimal
 import warnings
 from collections import OrderedDict
+from collections.abc import Iterable
 from dataclasses import dataclass, field
-from typing import Iterable, List, Optional
 
 from nzshm_common.constants import DEFAULT_RESOLUTION
 from nzshm_common.location.types import LatLon
@@ -209,11 +209,11 @@ class CodedLocationBin:
     """
 
     reference_point: CodedLocation
-    locations: List[CodedLocation]
+    locations: list[CodedLocation]
     bin_resolution: float
 
     def __init__(
-        self, reference_point: CodedLocation, bin_resolution: float, locations: Optional[Iterable[CodedLocation]] = None
+        self, reference_point: CodedLocation, bin_resolution: float, locations: Iterable[CodedLocation] | None = None
     ):
         """
         Create a CodedLocationBin instance.
@@ -227,9 +227,9 @@ class CodedLocationBin:
         self.bin_resolution = bin_resolution
 
         if locations is not None:
-            self.locations: List[CodedLocation] = list(locations)
+            self.locations: list[CodedLocation] = list(locations)
         else:
-            self.locations: List[CodedLocation] = list()
+            self.locations: list[CodedLocation] = list()
 
     def __iter__(self):
         """Iterate over the location collection."""

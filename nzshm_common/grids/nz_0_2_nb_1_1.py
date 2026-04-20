@@ -2121,5 +2121,5 @@ class NZ_0_2_nb_1_1:
                 -37.8,
                 -37.6,
             ]
-            self.nz = list(zip(lat, lon))
+            self.nz = list(zip(lat, lon, strict=True))
         return self.nz

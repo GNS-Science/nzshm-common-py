@@ -6,8 +6,9 @@ import csv
 import importlib.resources as resources
 import json
 from collections import namedtuple
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Optional
+from typing import Any
 
 from nzshm_common.constants import DEFAULT_RESOLUTION
 from nzshm_common.grids.region_grid import load_grid
@@ -27,7 +28,7 @@ with resources.as_file(resource_dir / 'nz_ids.json') as path:
     with path.open() as file:
         NZ_IDS = json.load(file)
 
-LOCATIONS_BY_ID: Dict[str, Any] = {location["id"]: location for location in LOCATIONS}
+LOCATIONS_BY_ID: dict[str, Any] = {location["id"]: location for location in LOCATIONS}
 
 
 LOCATION_LISTS = {
@@ -56,7 +57,7 @@ LOCATION_LISTS = {
 }
 
 
-def _get_macron_word_mapping() -> Dict[str, str]:
+def _get_macron_word_mapping() -> dict[str, str]:
     """using the maori_names.csv file as received from LINZ rather than storing the mapping allows
     us to update without rebuilding the resource"""
 
@@ -116,7 +117,7 @@ def _map_word(word_input):
     return word_input
 
 
-def _lat_lon(_id) -> Optional[LatLon]:
+def _lat_lon(_id) -> LatLon | None:
     loc = location_by_id(_id)
     if loc:
         return LatLon(loc['latitude'], loc['longitude'])
@@ -134,7 +135,7 @@ def _load_csv(locations_filepath, resolution):
     return locs
 
 
-def location_by_id(location_code: str) -> Optional[Dict[str, Any]]:
+def location_by_id(location_code: str) -> dict[str, Any] | None:
     """
     Get the information for a location identified by an id.
 
@@ -151,7 +152,7 @@ def location_by_id(location_code: str) -> Optional[Dict[str, Any]]:
     return LOCATIONS_BY_ID.get(location_code)
 
 
-def get_locations(locations: Iterable[str], resolution: float = DEFAULT_RESOLUTION) -> List[CodedLocation]:
+def get_locations(locations: Iterable[str], resolution: float = DEFAULT_RESOLUTION) -> list[CodedLocation]:
     """
     Get the coded locations from a list of identifiers.
 
@@ -169,7 +170,7 @@ def get_locations(locations: Iterable[str], resolution: float = DEFAULT_RESOLUTI
     Returns:
         coded_locations: a list of coded locations
     """
-    coded_locations: List[CodedLocation] = []
+    coded_locations: list[CodedLocation] = []
     for loc_id in locations:
         location_id = str(loc_id)
         if Path(location_id).exists():
@@ -186,13 +187,13 @@ def get_locations(locations: Iterable[str], resolution: float = DEFAULT_RESOLUTI
             try:
                 coded_locations += [CodedLocation(*loc, resolution) for loc in load_grid(location_id)]  # type: ignore
             except KeyError:
-                msg = "location {} is not a valid location identifier".format(location_id)
-                raise KeyError(msg)
+                msg = f"location {location_id} is not a valid location identifier"
+                raise KeyError(msg) from None
 
     return coded_locations
 
 
-def get_location_list_names() -> List[str]:
+def get_location_list_names() -> list[str]:
     """
     Return a list of valid location lists.
 
@@ -205,7 +206,7 @@ def get_location_list_names() -> List[str]:
 
 
 def get_location_list(
-    location_list_names: List[str], resolution: float = DEFAULT_RESOLUTION, sort_locations: bool = True
+    location_list_names: list[str], resolution: float = DEFAULT_RESOLUTION, sort_locations: bool = True
 ) -> Iterable[CodedLocation]:
     """
     Get all coded locations within one or more lists.

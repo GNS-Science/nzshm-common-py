@@ -9,30 +9,30 @@ nzshm-common is a shared Python library for the New Zealand National Seismic Haz
 ## Development Setup
 
 ```bash
-poetry install --all-extras    # Install with all optional dependencies (e.g., Shapely)
+uv sync --all-extras    # Install with all optional dependencies (e.g., Shapely)
 ```
 
 ## Common Commands
 
 ```bash
 # Testing
-poetry run pytest tests                          # Run all tests
-poetry run pytest tests/test_coded_location.py   # Run a single test file
-poetry run pytest -k "test_name"                 # Run tests matching keyword
-poetry run tox                                   # Full matrix (py310, py311, py312 + lint + format + audit)
-poetry run tox -e py312                          # Single Python version
+uv run pytest tests                          # Run all tests
+uv run pytest tests/test_coded_location.py   # Run a single test file
+uv run pytest -k "test_name"                 # Run tests matching keyword
+uv run tox                                   # Full matrix (py310, py311, py312 + lint + format + audit)
+uv run tox -e py312                          # Single Python version
 
 # Linting & Formatting
-poetry run tox -e lint                           # Flake8 + mypy
-poetry run tox -e format                         # Check black + isort formatting
-poetry run black .                               # Auto-format
-poetry run isort .                               # Sort imports
+uv run tox -e lint                           # ruff check + mypy
+uv run tox -e format                         # ruff format check
+uv run ruff format .                         # Auto-format
+uv run ruff check --select I --fix .         # Sort imports
 
 # Security
-poetry run tox -e audit                          # pip-audit + safety
+uv run tox -e audit                          # pip-audit + safety
 
 # Docs
-poetry run mkdocs serve                          # Local docs preview
+uv run mkdocs serve                          # Local docs preview
 ```
 
 ## Code Style

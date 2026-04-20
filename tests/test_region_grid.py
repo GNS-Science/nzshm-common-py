@@ -1,4 +1,4 @@
-from typing import Iterable
+from collections.abc import Iterable
 
 import pytest
 
@@ -86,9 +86,9 @@ def test_get_location_grid_downsampling():
 
     resample = grid_downsampled[0].resample(0.001)
     assert grid_downsampled[0] != resample, "Same locations at different resolutions are not considered equal"
-    assert (
-        grid_downsampled[0].as_tuple == resample.as_tuple
-    ), "CodedLocations at different resolutions can be compared as LatLon values"
+    assert grid_downsampled[0].as_tuple == resample.as_tuple, (
+        "CodedLocations at different resolutions can be compared as LatLon values"
+    )
 
     assert len(warnings) == 1, "Should only be warned about downsampling"
     assert str(warnings[0].message) == expected_message, "Should have matched expected message"

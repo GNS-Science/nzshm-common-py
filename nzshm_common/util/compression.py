@@ -2,10 +2,9 @@ import base64
 import io
 import zipfile
 from pathlib import Path, PurePath
-from typing import Union
 
 
-def compress_path(source_path: str, output_zip: Union[str, PurePath], compression=zipfile.ZIP_DEFLATED) -> str:
+def compress_path(source_path: str, output_zip: str | PurePath, compression=zipfile.ZIP_DEFLATED) -> str:
     """Zip contents of source path and return the archive path.
 
     Handles both single file and a folder.

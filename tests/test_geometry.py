@@ -52,7 +52,6 @@ def create_hexgrid(bbox, side):
 
 
 class TestHex(unittest.TestCase):
-
     unittest.skipUnless(HAVE_SHAPELY, "Test requires optional shapely module.")
 
     def test_create_hexagon(self):

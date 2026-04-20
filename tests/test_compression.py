@@ -57,7 +57,7 @@ def test_compress_path_round_trip():
                 print(list(Path(tmp2name).glob('*')))
                 assert extracted_fileA.exists()
 
-                with open(extracted_fileA, 'r') as newFileA:
+                with open(extracted_fileA) as newFileA:
                     assert newFileA.read() == random_content_A
     finally:
         if fileA is not None:

@@ -40,12 +40,12 @@ def test_code():
         CodedLocation(-41.2, 100.2, 0.001),
         CodedLocation(-30.5, 99, 0.001),
     ]
-    assert (
-        get_locations(["-41.200~100.200", "-30.500~99.000"]) == expected
-    ), "Should work with codes at default resolution"
-    assert (
-        get_locations(["-41.2~100.2", "-30.5~99"]) == expected
-    ), "Should work when code resolution doesn't exactly match, as long as values are correct"
+    assert get_locations(["-41.200~100.200", "-30.500~99.000"]) == expected, (
+        "Should work with codes at default resolution"
+    )
+    assert get_locations(["-41.2~100.2", "-30.5~99"]) == expected, (
+        "Should work when code resolution doesn't exactly match, as long as values are correct"
+    )
 
 
 def test_missing_location_name():
