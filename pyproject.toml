@@ -79,4 +79,4 @@ select = ["E", "F", "I", "B", "UP"]
 quote-style = "preserve"
 
 [tool.mypy]
-ignore_missing_imports = true
+follow_untyped_imports = true
