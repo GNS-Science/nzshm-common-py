@@ -131,5 +131,5 @@ class WLG_0_05_nb_1_1:
                 175.2,
                 175.2,
             ]
-            self.wlg = list(zip(lat, lon, strict=False))
+            self.wlg = list(zip(lat, lon, strict=True))
         return self.wlg
