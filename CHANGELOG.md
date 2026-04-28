@@ -8,9 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
-- deps: patch (10 pkgs: mkdocstrings, mypy, ruff, tox-uv, cachetools, identify, safety-schemas, tox-uv-bare, uv, virtualenv)
-- deps: minor (6 pkgs: pydantic, tox, authlib, filelock, packaging, pydantic-core; authlib fixes GHSA-jj8c-mmj3-mmgv)
-- deps: major: griffe 1→2, mkdocstrings-python 1→2, rich 14→15
+- dependency upgrades. griffe 1→2, mkdocstrings-python 1→2, rich 14→15
 
 ## [0.9.4] 2026-03-27
 
