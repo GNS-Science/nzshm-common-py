@@ -1,6 +1,6 @@
 [project]
 name = "nzshm-common"
-version = "0.9.4"
+dynamic = ["version"]
 description = "A small pure python library for shared NZ NSHM data like locations."
 readme = "README.md"
 license = "AGPL-3.0-or-later"
@@ -25,7 +25,6 @@ geometry = [
 
 [dependency-groups]
 dev = [
-    "bump2version",
     "mypy",
     "pip-audit>=2.9.0",
     "pre-commit",
@@ -54,8 +53,14 @@ doc = [
 ]
 
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "nzshm_common/_version.py"
 
 [tool.hatch.build.targets.wheel]
 packages = ["nzshm_common"]

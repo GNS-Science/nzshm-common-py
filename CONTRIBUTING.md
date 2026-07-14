@@ -112,12 +112,12 @@ $ uv run pytest -k somekeyword
 
 A reminder for the maintainers on how to deploy.
 Make sure all your changes are committed (including an entry in CHANGELOG.md).
-Then run:
+The version is derived from the git tag by hatch-vcs, so deploying is just a
+matter of tagging a new version and pushing:
 
 ```
-$ uv run bump2version patch # possible: major / minor / patch
-$ git push
-$ git push --tags
+$ git tag v1.1.1 # choose the next major / minor / patch version
+$ git push && git push --tags
 ```
 
 GitHub Actions will then deploy to PyPI if tests pass.
