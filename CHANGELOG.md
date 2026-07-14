@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+  - deps: fix pre-existing stale API usage in `scripts/locations_to_oq.py`
+  - deps: patch upgrades (10 pkgs)
+  - deps: minor upgrades (37 pkgs, incl. direct: mkdocs-include-markdown-plugin, pre-commit, pydantic, pytest, safety, tox)
+  - deps: major upgrades: mypy 1→2, griffe 1→2, mkdocstrings-python 1→2, plus transitive backrefs, cryptography, pymdown-extensions, readme-renderer, rich
+  - deps: skipped `nltk` fix (3.9.4→3.10.0, PYSEC-2026-597) — release is within the 1-week age cutoff
+  - deps: skipped `safety-schemas` (0.0.16→0.0.18) — exactly pinned by `safety`, no compatible release yet
+
 ## [0.9.4] 2026-03-27
 
 ### Changed

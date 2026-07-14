@@ -5,8 +5,10 @@ from pathlib import Path
 
 from shapely.geometry import Point
 
-from nzshm_common.geometry.geometry import create_backarc_polygon
-from nzshm_common.location.location import LOCATIONS_BY_ID, LOCATIONS_SRWG214_BY_ID
+from nzshm_common.geometry.geometry import backarc_polygon
+from nzshm_common.location.location import LOCATION_LISTS, LOCATIONS_BY_ID
+
+LOCATIONS_SRWG214_BY_ID = {loc_id: LOCATIONS_BY_ID[loc_id] for loc_id in LOCATION_LISTS["SRWG214"]["locations"]}
 
 
 class SiteLists(Enum):
@@ -19,7 +21,7 @@ def site_list(loc_by_id):
     sites = []
     for location in loc_by_id.values():
         point = Point(location['longitude'], location['latitude'])
-        ba_flag = int(create_backarc_polygon().contains(point))
+        ba_flag = int(backarc_polygon().contains(point))
         sites.append((location['id'], location['longitude'], location['latitude'], ba_flag))
     return sites
 
@@ -56,7 +58,7 @@ def main():
 
     output_path = Path(args.output_path)
     if output_path.exists():
-        raise Exception("output file %s already exists" % output_path)
+        raise Exception(f"output file {output_path} already exists")
 
     print(f"creating OpenQuake site file for {SiteLists[args.location_list].value}")
     location_list = SiteLists[args.location_list]
