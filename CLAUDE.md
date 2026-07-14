@@ -58,4 +58,4 @@ uv run mkdocs serve                          # Local docs preview
 
 ## Versioning & Release
 
-Uses bump2version (config in `.bumpversion.cfg`). Release by bumping version and pushing a `v*` tag — CI publishes to PyPI and deploys docs automatically.
+Version is derived from git tags by hatch-vcs (configured in `pyproject.toml` under `[tool.hatch.version]`); there is no hard-coded version string. Release by pushing a `v*` tag (`git tag vX.Y.Z && git push --tags`) — CI publishes to PyPI and deploys docs automatically.
