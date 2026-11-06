@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Removed
   - deps: safety
 
+### Changed
+  - deps: major: twine 6→7, plus transitive backrefs 7→8, cryptography 49→50, filelock 3→4, pymdown-extensions 11→12, python-dateutil 2→3, readme-renderer 45→46, wcmatch 10→11
+  - deps: minor upgrades (41 pkgs, incl. direct: griffe, mkdocs-material, mypy, pre-commit, pydantic, pytest, ruff, shapely, tox, tox-uv)
+  - deps: patch upgrades (13 pkgs)
+  - deps: filelock stays at 4.1.0 on Python 3.10 (fixed 4.2.x requires Python >=3.11)
+
 ## [0.10.0] 2026-07-14
 
 ### Changed
