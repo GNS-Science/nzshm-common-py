@@ -31,7 +31,6 @@ dev = [
     "pytest-cov",
     "pytest",
     "ruff",
-    "safety>=3.6.2",
     "shapely",
     "toml",
     "tox",
