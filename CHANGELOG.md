@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+  - deps: major: twine 6→7, plus transitive backrefs 7→8, cryptography 49→50, pymdown-extensions 11→12, python-dateutil 2→3, readme-renderer 45→46, wcmatch 10→11
+  - deps: minor and patch upgrades (all in-range, via `uv lock --upgrade`)
+  - deps: skipped filelock 4 (safety requires <4.0)
+
 ## [0.10.0] 2026-07-14
 
 ### Changed
