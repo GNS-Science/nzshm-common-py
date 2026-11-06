@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Removed
   - deps: safety
 
+### Changed
+  - deps: major: twine 6→7, backrefs 7→8, cryptography 49→50, filelock 3→4, pymdown-extensions 11→12, python-dateutil 2→3, readme-renderer 45→46, wcmatch 10→11
+  - deps: minor (41 pkgs), patch (12 pkgs)
+
 ## [0.10.0] 2026-07-14
 
 ### Changed
