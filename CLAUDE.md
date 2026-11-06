@@ -29,7 +29,7 @@ uv run ruff format .                         # Auto-format
 uv run ruff check --select I --fix .         # Sort imports
 
 # Security
-uv run tox -e audit                          # pip-audit + safety
+uv run tox -e audit                          # pip-audit
 
 # Docs
 uv run mkdocs serve                          # Local docs preview
